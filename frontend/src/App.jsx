@@ -10,40 +10,49 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Companies from "./pages/Companies";
+import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  return (<BrowserRouter> <Navbar />
+  return (
+    <BrowserRouter>
+      <Navbar />
 
-    ```
-    <Routes>
-      <Route
-        path="/"
-        element={<Home />}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-      <Route
-        path="/login"
-        element={<Login />}
-      />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-      <Route
-        path="/register"
-        element={<Register />}
-      />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
-      <Route
-        path="/companies"
-        element={
-          <ProtectedRoute>
-            <Companies />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
-  </BrowserRouter>
+        <Route
+          path="/companies"
+          element={
+            <ProtectedRoute>
+              <Companies />
+            </ProtectedRoute>
+          }
+        />
 
-
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
