@@ -3,6 +3,19 @@ const Application = require("../models/Application");
 // Apply Internship
 const createApplication = async (req, res) => {
     try {
+        const { studentEmail, companyId } = req.body;
+
+        const existingApplication = await Application.findOne({
+            studentEmail,
+            companyId,
+        });
+
+        if (existingApplication) {
+            return res.status(400).json({
+                message: "You have already applied for this internship",
+            });
+        }
+
         const application = await Application.create(req.body);
 
         res.status(201).json(application);
