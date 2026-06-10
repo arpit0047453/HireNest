@@ -30,7 +30,11 @@ const Companies = () => {
             alert("Application submitted successfully!");
         } catch (error) {
             console.log(error);
-            alert("Application failed!");
+
+            alert(
+                error.response?.data?.message ||
+                "Application failed!"
+            );
         }
     };
     return (

@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const connectDB = require("./config/db");
+const profileRoutes = require("./routes/profileRoutes");
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+app.use("/api/profile", profileRoutes);
 
 app.get("/", (req, res) => {
     res.send("InternshipHub API Running");

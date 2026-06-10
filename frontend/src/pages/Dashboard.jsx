@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Dashboard = () => {
     const [applications, setApplications] = useState([]);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         fetchApplications();
@@ -11,7 +14,12 @@ const Dashboard = () => {
     const fetchApplications = async () => {
         try {
             const res = await API.get("/application");
-            setApplications(res.data);
+            const myApplications = res.data.filter(
+                (application) =>
+                    application.studentEmail === user.email
+            );
+
+            setApplications(myApplications);
         } catch (error) {
             console.log(error);
         }

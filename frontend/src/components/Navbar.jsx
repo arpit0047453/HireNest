@@ -17,6 +17,16 @@ const Navbar = () => {
             <div style={{ display: "flex", gap: "15px" }}>
                 <Link to="/">Home</Link>
                 <Link to="/companies">Companies</Link>
+                <Link to="/profile">
+                    Profile
+                </Link>
+
+                {user && (
+                    <Link to="/dashboard">
+                        Dashboard
+                    </Link>
+
+                )}
             </div>
 
             <div>
@@ -34,6 +44,7 @@ const Navbar = () => {
                     <>
                         <Link to="/login">Login</Link>{" "}
                         <Link to="/register">Register</Link>
+
                     </>
                 )}
             </div>
