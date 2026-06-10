@@ -23,13 +23,36 @@ const userSchema = new mongoose.Schema(
             enum: ["student", "admin"],
             default: "student",
         },
+
+        phone: {
+            type: String,
+            default: "",
+        },
+
+        skills: {
+            type: String,
+            default: "",
+        },
+
+        github: {
+            type: String,
+            default: "",
+        },
+
+        linkedin: {
+            type: String,
+            default: "",
+        },
+
+        bio: {
+            type: String,
+            default: "",
+        },
+
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = mongoose.model(
-    "User",
-    userSchema
-);
+module.exports = mongoose.model("User", userSchema);
