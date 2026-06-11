@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const connectDB = require("./config/db");
 const profileRoutes = require("./routes/profileRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 dotenv.config();
 
@@ -12,6 +13,9 @@ connectDB();
 const app = express();
 
 app.use(cors());
+
+app.use("/uploads", express.static("uploads"));
+app.use("/api/upload", uploadRoutes);
 
 app.use(express.json());
 app.use("/api/profile", profileRoutes);

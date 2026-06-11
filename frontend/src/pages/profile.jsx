@@ -4,6 +4,7 @@ import API from "../services/api";
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
+    const [resumeFile, setResumeFile] = useState(null);
 
     const [formData, setFormData] = useState({
         email: "",
@@ -15,6 +16,10 @@ const Profile = () => {
         bio: "",
         resumeUrl: "",
     });
+
+    const handleResumeChange = (e) => {
+        setResumeFile(e.target.files[0]);
+    };
 
     useEffect(() => {
         if (user) {
@@ -66,13 +71,45 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         try {
-            await API.post("/profile", formData);
-            alert("Profile saved successfully!");
+            let updatedFormData = {
+                ...formData,
+            };
+
+            if (resumeFile) {
+                const data = new FormData();
+
+                data.append(
+                    "resume",
+                    resumeFile
+                );
+
+                const uploadRes =
+                    await API.post(
+                        "/upload/resume",
+                        data
+                    );
+
+                updatedFormData.resumeUrl =
+                    uploadRes.data.resumeUrl;
+            }
+
+            await API.post(
+                "/profile",
+                updatedFormData
+            );
+
+            alert(
+                "Profile saved successfully!"
+            );
         } catch (error) {
             console.log(error);
-            alert("Failed to save profile");
+            alert(
+                "Failed to save profile"
+            );
         }
+
     };
 
     return (
@@ -99,15 +136,6 @@ const Profile = () => {
 
                 <br /><br />
 
-                <input
-                    type="text"
-                    name="phone"
-                    placeholder="Phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
 
                 <input
                     type="text"
@@ -149,13 +177,10 @@ const Profile = () => {
                 <br /><br />
 
                 <input
-                    type="text"
-                    name="resumeUrl"
-                    placeholder="Resume URL"
-                    value={formData.resumeUrl}
-                    onChange={handleChange}
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleResumeChange}
                 />
-
                 <br /><br />
 
                 <button type="submit">

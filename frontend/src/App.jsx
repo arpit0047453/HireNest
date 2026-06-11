@@ -13,6 +13,7 @@ import Companies from "./pages/Companies";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import AdminApplications from "./pages/AdminApplications";
 
 function App() {
   return (
@@ -21,9 +22,14 @@ function App() {
 
       <Routes>
         <Route
+          path="/admin"
+          element={<AdminApplications />}
+        />
+        <Route
           path="/"
           element={<Home />}
         />
+
         <Route
           path="/profile"
           element={

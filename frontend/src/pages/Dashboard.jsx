@@ -23,6 +23,7 @@ const Dashboard = () => {
         } catch (error) {
             console.log(error);
         }
+        
     };
 
     return (
