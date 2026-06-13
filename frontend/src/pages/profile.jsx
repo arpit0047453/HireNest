@@ -183,6 +183,33 @@ const Profile = () => {
                 />
                 <br /><br />
 
+                {formData.resumeUrl && (
+                    <>
+                        <a
+                            href={formData.resumeUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            View Resume
+                        </a>
+
+                        <br /><br />
+                    </>
+                )}
+                {formData.resumeUrl && (
+                    <>
+                        <a
+                            href={formData.resumeUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            View Resume
+                        </a>
+
+                        <br /><br />
+                    </>
+                )}
+
                 <button type="submit">
                     Save Profile
                 </button>

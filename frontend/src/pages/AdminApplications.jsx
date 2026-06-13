@@ -11,7 +11,28 @@ const AdminApplications = () => {
     const fetchApplications = async () => {
         try {
             const res = await API.get("/application");
-            setApplications(res.data);
+
+            const applicationsWithResume =
+                await Promise.all(
+                    res.data.map(async (application) => {
+                        try {
+                            const profileRes =
+                                await API.get(
+                                    `/profile/${application.studentEmail}`
+                                );
+
+                            return {
+                                ...application,
+                                resumeUrl:
+                                    profileRes.data?.resumeUrl || "",
+                            };
+                        } catch {
+                            return application;
+                        }
+                    })
+                );
+
+            setApplications(applicationsWithResume);
         } catch (error) {
             console.log(error);
         }
@@ -55,6 +76,18 @@ const AdminApplications = () => {
                         {" "}
                         {application.status}
                     </p>
+
+                    {application.resumeUrl && (
+                        <p>
+                            <a
+                                href={application.resumeUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                View Resume
+                            </a>
+                        </p>
+                    )}
 
                     <select
                         value={application.status}
