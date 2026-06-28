@@ -14,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import AdminApplications from "./pages/AdminApplications";
+import AdminCompanies from "./pages/AdminCompanies";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -21,6 +23,23 @@ function App() {
       <Navbar />
 
       <Routes>
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin-companies"
+          element={
+            <ProtectedRoute>
+              <AdminCompanies />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin"
           element={<AdminApplications />}

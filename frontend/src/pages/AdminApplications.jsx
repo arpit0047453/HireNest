@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
+import {
+    useEffect,
+    useState,
+    useContext,
+} from "react";
+
 import API from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 const AdminApplications = () => {
     const [applications, setApplications] = useState([]);
+
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         fetchApplications();
@@ -18,7 +26,7 @@ const AdminApplications = () => {
                         try {
                             const profileRes =
                                 await API.get(
-                                    `/profile/${application.studentEmail}`
+                                    `/ profile / ${application.studentEmail} `
                                 );
 
                             return {
@@ -38,9 +46,13 @@ const AdminApplications = () => {
         }
     };
 
+    if (user?.role !== "admin") {
+        return <h2>Access Denied</h2>;
+    }
+
     const updateStatus = async (id, status) => {
         try {
-            await API.put(`/application/${id}`, {
+            await API.put(`/ application / ${id} `, {
                 status,
             });
 
@@ -66,15 +78,15 @@ const AdminApplications = () => {
                     <h3>{application.studentName}</h3>
 
                     <p>
-                        Company:
-                        {" "}
+                        Company:{" "}
                         {application.companyId?.companyName}
                     </p>
 
                     <p>
-                        Status:
-                        {" "}
-                        {application.status}
+                        Status:{" "}
+                        <strong>
+                            {application.status}
+                        </strong>
                     </p>
 
                     {application.resumeUrl && (

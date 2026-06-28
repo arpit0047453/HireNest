@@ -26,11 +26,6 @@ const getCompanies = async (req, res) => {
     }
 };
 
-module.exports = {
-    createCompany,
-    getCompanies,
-};
-
 const updateCompany = async (req, res) => {
     try {
         const company = await Company.findByIdAndUpdate(

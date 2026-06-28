@@ -64,6 +64,8 @@ exports.loginUser = async (req, res) => {
             email,
         });
 
+        console.log("LOGIN USER:", user);
+
         if (
             user &&
             (await bcrypt.compare(
