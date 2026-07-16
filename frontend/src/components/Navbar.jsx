@@ -4,76 +4,116 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
-    console.log("USER DATA:", user);
 
     return (
-        <nav
-            style={{
-                padding: "15px",
-                borderBottom: "1px solid #ddd",
-                display: "flex",
-                justifyContent: "space-between",
-            }}
-        >
-            <div style={{ display: "flex", gap: "15px" }}>
-                <Link to="/">Home</Link>
-                <Link to="/companies">Companies</Link>
-                <Link to="/profile">
-                    Profile
+        <nav className="bg-blue-700 text-white shadow-md">
+            <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+
+                {/* Logo */}
+                <Link
+                    to="/"
+                    className="text-2xl font-bold hover:text-blue-200 transition"
+                >
+                    HireNest
                 </Link>
 
-                {user && (
-                    <Link to="/dashboard">
-                        Dashboard
+                {/* Navigation Links */}
+                <div className="flex items-center gap-6">
+
+                    <Link
+                        to="/"
+                        className="hover:text-blue-200 transition"
+                    >
+                        Home
                     </Link>
-                )}
-                {user?.role === "admin" && (
-                    <>
-                        <Link to="/admin-dashboard">
-                            Admin Dashboard
-                        </Link>
 
-                        <Link to="/admin">
-                            Admin Applications
-                        </Link>
+                    <Link
+                        to="/companies"
+                        className="hover:text-blue-200 transition"
+                    >
+                        Companies
+                    </Link>
 
-                        <Link to="/admin-companies">
-                            Manage Internships
-                        </Link>
-                    </>
-                )}
-                {user?.role === "admin" && (
-                    <>
-                        <Link to="/admin">
-                            Admin Applications
-                        </Link>
+                    {user && (
+                        <>
+                            <Link
+                                to="/dashboard"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Dashboard
+                            </Link>
 
-                        <Link to="/admin-companies">
-                            Manage Internships
-                        </Link>
-                    </>
-                )}
+                            <Link
+                                to="/profile"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Profile
+                            </Link>
+                        </>
+                    )}
 
-            </div>
+                    {user?.role === "admin" && (
+                        <>
+                            <Link
+                                to="/admin-dashboard"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Admin Dashboard
+                            </Link>
 
-            <div>
-                {user ? (
-                    <>
-                        <span style={{ marginRight: "10px" }}>
-                            Welcome {user.email}
-                        </span>
+                            <Link
+                                to="/admin"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Applications
+                            </Link>
 
-                        <button onClick={logout}>
-                            Logout
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login">Login</Link>{" "}
-                        <Link to="/register">Register</Link>
+                            <Link
+                                to="/admin-companies"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Internships
+                            </Link>
+                        </>
+                    )}
+                </div>
 
-                    </>
-                )}
+                {/* Right Side */}
+                <div className="flex items-center gap-4">
+
+                    {user ? (
+                        <>
+                            <span className="hidden md:block">
+                                👋 {user.email}
+                            </span>
+
+                            <button
+                                onClick={logout}
+                                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                className="hover:text-blue-200 transition"
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                to="/register"
+                                className="bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
+
+                </div>
+
             </div>
         </nav>
     );

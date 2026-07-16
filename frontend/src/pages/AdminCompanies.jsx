@@ -6,6 +6,7 @@ const AdminCompanies = () => {
     const { user } = useContext(AuthContext);
 
     const [companies, setCompanies] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [formData, setFormData] = useState({
         companyName: "",
@@ -43,18 +44,10 @@ const AdminCompanies = () => {
 
         try {
             if (editingId) {
-                await API.put(
-                    `/ company / ${editingId} `,
-                    formData
-                );
-
+                await API.put(`/company/${editingId}`, formData);
                 alert("Internship updated!");
             } else {
-                await API.post(
-                    "/company",
-                    formData
-                );
-
+                await API.post("/company", formData);
                 alert("Internship created!");
             }
 
@@ -89,15 +82,14 @@ const AdminCompanies = () => {
     };
 
     const handleDelete = async (id) => {
-        const confirmDelete =
-            window.confirm(
-                "Delete this internship?"
-            );
+        const confirmDelete = window.confirm(
+            "Delete this internship?"
+        );
 
         if (!confirmDelete) return;
 
         try {
-            await API.delete(`/ company / ${id} `);
+            await API.delete(`/company/${id}`);
 
             alert("Deleted successfully");
 
@@ -179,46 +171,97 @@ const AdminCompanies = () => {
 
             <hr />
 
+            <input
+                type="text"
+                placeholder="Search by Company, Role or Location..."
+                value={searchTerm}
+                onChange={(e) =>
+                    setSearchTerm(e.target.value)
+                }
+                style={{
+                    width: "300px",
+                    padding: "8px",
+                    marginBottom: "20px",
+                }}
+            />
+
             <h3>All Internships</h3>
 
-            {companies.map((company) => (
-                <div
-                    key={company._id}
-                    style={{
-                        border: "1px solid #ccc",
-                        padding: "10px",
-                        marginBottom: "10px",
-                    }}
-                >
-                    <h4>
-                        {company.companyName}
-                    </h4>
+            {companies
+                .filter((company) => {
+                    const search = searchTerm.toLowerCase();
 
-                    <p>{company.title}</p>
-
-                    <button
-                        onClick={() =>
-                            handleEdit(company)
-                        }
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            handleDelete(company._id)
-                        }
+                    return (
+                        (company.companyName || "")
+                            .toLowerCase()
+                            .includes(search) ||
+                        (company.title || "")
+                            .toLowerCase()
+                            .includes(search) ||
+                        (company.location || "")
+                            .toLowerCase()
+                            .includes(search)
+                    );
+                })
+                .map((company) => (
+                    <div
+                        key={company._id}
                         style={{
-                            marginLeft: "10px",
+                            border: "1px solid #ccc",
+                            padding: "10px",
+                            marginBottom: "10px",
                         }}
                     >
-                        Delete
-                    </button>
-                </div>
-            ))}
+                        <h4>{company.companyName}</h4>
+
+                        <p>
+                            <strong>Role:</strong>{" "}
+                            {company.title}
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>{" "}
+                            {company.location}
+                        </p>
+
+                        <p>
+                            <strong>Stipend:</strong>{" "}
+                            {company.stipend}
+                        </p>
+
+                        <p>
+                            <strong>Duration:</strong>{" "}
+                            {company.duration}
+                        </p>
+
+                        <p>
+                            <strong>Description:</strong>
+                            <br />
+                            {company.description}
+                        </p>
+
+                        <button
+                            onClick={() =>
+                                handleEdit(company)
+                            }
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            onClick={() =>
+                                handleDelete(company._id)
+                            }
+                            style={{
+                                marginLeft: "10px",
+                            }}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                ))}
         </div>
     );
-
 };
 
 export default AdminCompanies;
