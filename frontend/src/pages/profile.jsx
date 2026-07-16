@@ -71,7 +71,6 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
         try {
             let updatedFormData = {
                 ...formData,
@@ -80,16 +79,12 @@ const Profile = () => {
             if (resumeFile) {
                 const data = new FormData();
 
-                data.append(
-                    "resume",
-                    resumeFile
-                );
+                data.append("resume", resumeFile);
 
-                const uploadRes =
-                    await API.post(
-                        "/upload/resume",
-                        data
-                    );
+                const uploadRes = await API.post(
+                    "/upload/resume",
+                    data
+                );
 
                 updatedFormData.resumeUrl =
                     uploadRes.data.resumeUrl;
@@ -100,110 +95,130 @@ const Profile = () => {
                 updatedFormData
             );
 
-            alert(
-                "Profile saved successfully!"
-            );
+            alert("Profile saved successfully!");
         } catch (error) {
             console.log(error);
-            alert(
-                "Failed to save profile"
-            );
+            alert("Failed to save profile");
         }
-
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Student Profile</h2>
+        <div className="min-h-screen bg-gray-100 py-10">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
+            <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
 
-                <br /><br />
+                <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
+                    Student Profile
+                </h1>
 
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    readOnly
-                />
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
+                >
 
-                <br /><br />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        readOnly
+                        className="w-full border rounded-lg px-4 py-3 bg-gray-100"
+                    />
 
-                <input
-                    type="text"
-                    name="skills"
-                    placeholder="Skills"
-                    value={formData.skills}
-                    onChange={handleChange}
-                />
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="Phone Number"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
-                <br /><br />
+                    <input
+                        type="text"
+                        name="skills"
+                        placeholder="Skills (React, Node.js...)"
+                        value={formData.skills}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
-                <input
-                    type="text"
-                    name="github"
-                    placeholder="GitHub"
-                    value={formData.github}
-                    onChange={handleChange}
-                />
+                    <input
+                        type="text"
+                        name="github"
+                        placeholder="GitHub Profile"
+                        value={formData.github}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
-                <br /><br />
+                    <input
+                        type="text"
+                        name="linkedin"
+                        placeholder="LinkedIn Profile"
+                        value={formData.linkedin}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
-                <input
-                    type="text"
-                    name="linkedin"
-                    placeholder="LinkedIn"
-                    value={formData.linkedin}
-                    onChange={handleChange}
-                />
+                    <textarea
+                        name="bio"
+                        placeholder="Tell us about yourself..."
+                        value={formData.bio}
+                        onChange={handleChange}
+                        rows="5"
+                        className="w-full border rounded-lg px-4 py-3"
+                    />
 
-                <br /><br />
+                    <div>
 
-                <textarea
-                    name="bio"
-                    placeholder="Bio"
-                    value={formData.bio}
-                    onChange={handleChange}
-                />
+                        <label className="font-semibold">
+                            Upload Resume (PDF)
+                        </label>
 
-                <br /><br />
+                        <input
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleResumeChange}
+                            className="mt-2"
+                        />
 
-                <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={handleResumeChange}
-                />
-                <br /><br />
+                    </div>
 
-                {formData.resumeUrl && (
-                    <>
+                    {formData.resumeUrl && (
+
                         <a
                             href={formData.resumeUrl}
                             target="_blank"
                             rel="noreferrer"
+                            className="text-blue-600 hover:underline"
                         >
-                            View Resume
+                            📄 View Uploaded Resume
                         </a>
 
-                        <br /><br />
-                    </>
-                )}
+                    )}
 
-                <button type="submit">
-                    Save Profile
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
+                    >
+                        Save Profile
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
     );
-
 };
 
 export default Profile;
