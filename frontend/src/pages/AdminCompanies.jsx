@@ -104,162 +104,175 @@ const AdminCompanies = () => {
     }
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Admin Internship Management</h2>
+        <div className="min-h-screen bg-gray-100 py-10">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    name="companyName"
-                    placeholder="Company Name"
-                    value={formData.companyName}
-                    onChange={handleChange}
-                />
+            <div className="max-w-7xl mx-auto px-6">
 
-                <br /><br />
+                <h1 className="text-4xl font-bold text-blue-700 mb-8">
+                    Internship Management
+                </h1>
 
-                <input
-                    name="title"
-                    placeholder="Role"
-                    value={formData.title}
-                    onChange={handleChange}
-                />
+                <div className="bg-white rounded-xl shadow-lg p-8 mb-10">
 
-                <br /><br />
+                    <h2 className="text-2xl font-semibold mb-6">
+                        {editingId
+                            ? "Update Internship"
+                            : "Create Internship"}
+                    </h2>
 
-                <input
-                    name="location"
-                    placeholder="Location"
-                    value={formData.location}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    name="stipend"
-                    placeholder="Stipend"
-                    value={formData.stipend}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    name="duration"
-                    placeholder="Duration"
-                    value={formData.duration}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <textarea
-                    name="description"
-                    placeholder="Description"
-                    value={formData.description}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <button type="submit">
-                    {editingId
-                        ? "Update Internship"
-                        : "Create Internship"}
-                </button>
-            </form>
-
-            <hr />
-
-            <input
-                type="text"
-                placeholder="Search by Company, Role or Location..."
-                value={searchTerm}
-                onChange={(e) =>
-                    setSearchTerm(e.target.value)
-                }
-                style={{
-                    width: "300px",
-                    padding: "8px",
-                    marginBottom: "20px",
-                }}
-            />
-
-            <h3>All Internships</h3>
-
-            {companies
-                .filter((company) => {
-                    const search = searchTerm.toLowerCase();
-
-                    return (
-                        (company.companyName || "")
-                            .toLowerCase()
-                            .includes(search) ||
-                        (company.title || "")
-                            .toLowerCase()
-                            .includes(search) ||
-                        (company.location || "")
-                            .toLowerCase()
-                            .includes(search)
-                    );
-                })
-                .map((company) => (
-                    <div
-                        key={company._id}
-                        style={{
-                            border: "1px solid #ccc",
-                            padding: "10px",
-                            marginBottom: "10px",
-                        }}
+                    <form
+                        onSubmit={handleSubmit}
+                        className="grid md:grid-cols-2 gap-5"
                     >
-                        <h4>{company.companyName}</h4>
 
-                        <p>
-                            <strong>Role:</strong>{" "}
-                            {company.title}
-                        </p>
+                        <input
+                            name="companyName"
+                            placeholder="Company Name"
+                            value={formData.companyName}
+                            onChange={handleChange}
+                            className="border rounded-lg px-4 py-3"
+                        />
 
-                        <p>
-                            <strong>Location:</strong>{" "}
-                            {company.location}
-                        </p>
+                        <input
+                            name="title"
+                            placeholder="Role"
+                            value={formData.title}
+                            onChange={handleChange}
+                            className="border rounded-lg px-4 py-3"
+                        />
 
-                        <p>
-                            <strong>Stipend:</strong>{" "}
-                            {company.stipend}
-                        </p>
+                        <input
+                            name="location"
+                            placeholder="Location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            className="border rounded-lg px-4 py-3"
+                        />
 
-                        <p>
-                            <strong>Duration:</strong>{" "}
-                            {company.duration}
-                        </p>
+                        <input
+                            name="stipend"
+                            placeholder="Stipend"
+                            value={formData.stipend}
+                            onChange={handleChange}
+                            className="border rounded-lg px-4 py-3"
+                        />
 
-                        <p>
-                            <strong>Description:</strong>
-                            <br />
-                            {company.description}
-                        </p>
+                        <input
+                            name="duration"
+                            placeholder="Duration"
+                            value={formData.duration}
+                            onChange={handleChange}
+                            className="border rounded-lg px-4 py-3"
+                        />
+
+                        <div></div>
+
+                        <textarea
+                            name="description"
+                            placeholder="Description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            rows="5"
+                            className="border rounded-lg px-4 py-3 md:col-span-2"
+                        />
 
                         <button
-                            onClick={() =>
-                                handleEdit(company)
-                            }
+                            type="submit"
+                            className="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
                         >
-                            Edit
+                            {editingId
+                                ? "Update Internship"
+                                : "Create Internship"}
                         </button>
 
-                        <button
-                            onClick={() =>
-                                handleDelete(company._id)
-                            }
-                            style={{
-                                marginLeft: "10px",
-                            }}
-                        >
-                            Delete
-                        </button>
-                    </div>
-                ))}
+                    </form>
+
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+
+                    <h2 className="text-2xl font-semibold">
+                        All Internships
+                    </h2>
+
+                    <input
+                        type="text"
+                        placeholder="Search by Company, Role or Location..."
+                        value={searchTerm}
+                        onChange={(e) =>
+                            setSearchTerm(e.target.value)
+                        }
+                        className="border rounded-lg px-4 py-3 w-full md:w-96"
+                    />
+
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {companies
+                        .filter((company) => {
+                            const search = searchTerm.toLowerCase();
+
+                            return (
+                                (company.companyName || "")
+                                    .toLowerCase()
+                                    .includes(search) ||
+                                (company.title || "")
+                                    .toLowerCase()
+                                    .includes(search) ||
+                                (company.location || "")
+                                    .toLowerCase()
+                                    .includes(search)
+                            );
+                        })
+                        .map((company) => (
+                            <div
+                                key={company._id}
+                                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition"
+                            >
+                                <h3 className="text-xl font-bold text-blue-700 mb-3">
+                                    {company.companyName}
+                                </h3>
+
+                                <p className="mb-2">
+                                    <strong>Role:</strong> {company.title}
+                                </p>
+
+                                <p className="mb-2">
+                                    <strong>Location:</strong> {company.location}
+                                </p>
+
+                                <p className="mb-2">
+                                    <strong>Stipend:</strong> {company.stipend}
+                                </p>
+
+                                <p className="mb-2">
+                                    <strong>Duration:</strong> {company.duration}
+                                </p>
+
+                                <p className="mb-5 text-gray-600">
+                                    {company.description}
+                                </p>
+
+                                <div className="flex gap-3">
+                                    <button
+                                        onClick={() => handleEdit(company)}
+                                        className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg"
+                                    >
+                                        Edit
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleDelete(company._id)}
+                                        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                </div>
+
+            </div>
         </div>
     );
 };
