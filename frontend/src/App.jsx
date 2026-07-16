@@ -22,70 +22,81 @@ function App() {
     <BrowserRouter>
       <Navbar />
 
-      <Routes>
-        <Route
-          path="/admin-dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+      <div className="pt-4">
+        <Routes>
 
-        <Route
-          path="/admin-companies"
-          element={
-            <ProtectedRoute>
-              <AdminCompanies />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={<AdminApplications />}
-        />
-        <Route
-          path="/"
-          element={<Home />}
-        />
+          <Route
+            path="/"
+            element={<Home />}
+          />
 
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+          <Route
+            path="/register"
+            element={<Register />}
+          />
 
-        <Route
-          path="/register"
-          element={<Register />}
-        />
+          <Route
+            path="/companies"
+            element={
+              <ProtectedRoute>
+                <Companies />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/companies"
-          element={
-            <ProtectedRoute>
-              <Companies />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminApplications />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin-companies"
+            element={
+              <ProtectedRoute>
+                <AdminCompanies />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+        </Routes>
+      </div>
+
     </BrowserRouter>
   );
 }

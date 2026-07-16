@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
 
+    const navClass = ({ isActive }) =>
+        `transition duration-200 ${isActive
+            ? "text-yellow-300 font-semibold"
+            : "hover:text-blue-200"
+        }`;
+
     return (
-        <nav className="bg-blue-700 text-white shadow-md">
+        <nav className="sticky top-0 z-50 bg-blue-700 text-white shadow-md">
             <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
                 {/* Logo */}
@@ -14,68 +20,57 @@ const Navbar = () => {
                     to="/"
                     className="text-2xl font-bold hover:text-blue-200 transition"
                 >
-                    HireNest
+                    💼 HireNest
                 </Link>
 
-                {/* Navigation Links */}
+                {/* Navigation */}
                 <div className="flex items-center gap-6">
 
-                    <Link
-                        to="/"
-                        className="hover:text-blue-200 transition"
-                    >
+                    <NavLink to="/" className={navClass}>
                         Home
-                    </Link>
+                    </NavLink>
 
-                    <Link
-                        to="/companies"
-                        className="hover:text-blue-200 transition"
-                    >
+                    <NavLink to="/companies" className={navClass}>
                         Companies
-                    </Link>
+                    </NavLink>
 
                     {user && (
                         <>
-                            <Link
-                                to="/dashboard"
-                                className="hover:text-blue-200 transition"
-                            >
+                            <NavLink to="/dashboard" className={navClass}>
                                 Dashboard
-                            </Link>
+                            </NavLink>
 
-                            <Link
-                                to="/profile"
-                                className="hover:text-blue-200 transition"
-                            >
+                            <NavLink to="/profile" className={navClass}>
                                 Profile
-                            </Link>
+                            </NavLink>
                         </>
                     )}
 
                     {user?.role === "admin" && (
                         <>
-                            <Link
+                            <NavLink
                                 to="/admin-dashboard"
-                                className="hover:text-blue-200 transition"
+                                className={navClass}
                             >
                                 Admin Dashboard
-                            </Link>
+                            </NavLink>
 
-                            <Link
+                            <NavLink
                                 to="/admin"
-                                className="hover:text-blue-200 transition"
+                                className={navClass}
                             >
                                 Applications
-                            </Link>
+                            </NavLink>
 
-                            <Link
+                            <NavLink
                                 to="/admin-companies"
-                                className="hover:text-blue-200 transition"
+                                className={navClass}
                             >
                                 Internships
-                            </Link>
+                            </NavLink>
                         </>
                     )}
+
                 </div>
 
                 {/* Right Side */}
@@ -83,32 +78,36 @@ const Navbar = () => {
 
                     {user ? (
                         <>
-                            <span className="hidden md:block">
-                                👋 {user.email}
-                            </span>
+                            <div className="hidden md:flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-full shadow">
+                                <span className="text-lg">👤</span>
+
+                                <span className="text-sm font-medium">
+                                    {user.name || user.email}
+                                </span>
+                            </div>
 
                             <button
                                 onClick={logout}
-                                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition"
+                                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg font-medium transition"
                             >
-                                Logout
+                                🚪 Sign Out
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link
+                            <NavLink
                                 to="/login"
-                                className="hover:text-blue-200 transition"
+                                className={navClass}
                             >
                                 Login
-                            </Link>
+                            </NavLink>
 
-                            <Link
+                            <NavLink
                                 to="/register"
-                                className="bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
+                                className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition"
                             >
                                 Register
-                            </Link>
+                            </NavLink>
                         </>
                     )}
 
