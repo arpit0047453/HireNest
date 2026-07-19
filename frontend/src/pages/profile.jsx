@@ -7,6 +7,7 @@ const Profile = () => {
     const [resumeFile, setResumeFile] = useState(null);
 
     const [formData, setFormData] = useState({
+
         email: "",
         name: "",
         phone: "",
@@ -16,6 +17,23 @@ const Profile = () => {
         bio: "",
         resumeUrl: "",
     });
+    const fields = [
+        formData.name,
+        formData.phone,
+        formData.skills,
+        formData.github,
+        formData.linkedin,
+        formData.bio,
+        formData.resumeUrl,
+    ];
+
+    const completed = fields.filter(
+        (item) => item && item.trim() !== ""
+    ).length;
+
+    const percentage = Math.round(
+        (completed / fields.length) * 100
+    );
 
     const handleResumeChange = (e) => {
         setResumeFile(e.target.files[0]);
@@ -95,7 +113,7 @@ const Profile = () => {
                 updatedFormData
             );
 
-            alert("Profile saved successfully!");
+            alert("✅ Profile updated successfully!");
         } catch (error) {
             console.log(error);
             alert("Failed to save profile");
@@ -110,6 +128,28 @@ const Profile = () => {
                 <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
                     Student Profile
                 </h1>
+                <div className="mb-8">
+
+                    <div className="flex justify-between mb-2">
+                        <span className="font-semibold">
+                            Profile Completion
+                        </span>
+
+                        <span className="text-blue-700 font-bold">
+                            {percentage}%
+                        </span>
+                    </div>
+
+                    <div className="w-full bg-gray-200 rounded-full h-4">
+
+                        <div
+                            className="bg-blue-600 h-4 rounded-full"
+                            style={{ width: `${percentage}%` }}
+                        ></div>
+
+                    </div>
+
+                </div>
 
                 <form
                     onSubmit={handleSubmit}
@@ -188,8 +228,17 @@ const Profile = () => {
                             type="file"
                             accept=".pdf"
                             onChange={handleResumeChange}
-                            className="mt-2"
+                            className="mt-2 w-full border rounded-lg p-3"
                         />
+
+                        {resumeFile && (
+
+                            <p className="text-green-600 mt-2">
+                                Selected:
+                                <strong> {resumeFile.name}</strong>
+                            </p>
+
+                        )}
 
                     </div>
 
@@ -197,9 +246,9 @@ const Profile = () => {
 
                         <a
                             href={formData.resumeUrl}
+                            className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition"
                             target="_blank"
                             rel="noreferrer"
-                            className="text-blue-600 hover:underline"
                         >
                             📄 View Uploaded Resume
                         </a>

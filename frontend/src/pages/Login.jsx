@@ -1,65 +1,98 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
-function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const { login } = useContext(AuthContext);
+const Login = () => {
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("Button clicked");
-
         try {
-            const res = await API.post("/auth/login", {
-                email,
-                password,
-            });
-
-            console.log(res.data);
+            const res = await API.post("/user/login", formData);
 
             login(res.data);
+
+            alert("Login Successful!");
+
             navigate("/");
-        } catch (err) {
-            console.log(err);
-            alert("Login failed");
+        } catch (error) {
+            alert(
+                error.response?.data?.message ||
+                "Login Failed"
+            );
         }
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Login</h2>
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-8">
 
-                <br />
-                <br />
+                <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+                    Welcome Back 👋
+                </h1>
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
+                >
 
-                <br />
-                <br />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-                <button type="submit">Login</button>
-            </form>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+                <p className="text-center text-gray-600 mt-6">
+                    Don't have an account?{" "}
+                    <Link
+                        to="/register"
+                        className="text-blue-600 font-semibold hover:underline"
+                    >
+                        Register
+                    </Link>
+                </p>
+
+            </div>
+
         </div>
     );
-}
+};
 
 export default Login;
