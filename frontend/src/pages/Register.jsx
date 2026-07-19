@@ -1,26 +1,31 @@
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 
 const Register = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
     const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            await API.post("/auth/register", {
-                name,
-                email,
-                password,
-            });
+            await API.post("/auth/register", formData);
 
-            alert("Registration successful");
+            alert("Registration successful!");
+
             navigate("/login");
         } catch (error) {
             alert(
@@ -31,50 +36,67 @@ const Register = () => {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Register</h2>
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) =>
-                        setName(e.target.value)
-                    }
-                />
+            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-8">
 
-                <br />
-                <br />
+                <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+                    Create Account 🚀
+                </h1>
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                />
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
+                >
 
-                <br />
-                <br />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-                <br />
-                <br />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-                <button type="submit">
-                    Register
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                    >
+                        Register
+                    </button>
+
+                </form>
+
+                <p className="text-center text-gray-600 mt-6">
+                    Already have an account?{" "}
+                    <Link
+                        to="/login"
+                        className="text-blue-600 font-semibold hover:underline"
+                    >
+                        Login
+                    </Link>
+                </p>
+
+            </div>
+
         </div>
     );
 };
