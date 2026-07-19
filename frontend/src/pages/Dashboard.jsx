@@ -7,8 +7,10 @@ const Dashboard = () => {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        fetchApplications();
-    }, []);
+        if (user) {
+            fetchApplications();
+        }
+    }, [user]);
 
     const fetchApplications = async () => {
         try {
@@ -31,8 +33,12 @@ const Dashboard = () => {
         (app) => app.status === "Pending"
     ).length;
 
-    const accepted = applications.filter(
-        (app) => app.status === "Accepted"
+    const shortlisted = applications.filter(
+        (app) => app.status === "Shortlisted"
+    ).length;
+
+    const selected = applications.filter(
+        (app) => app.status === "Selected"
     ).length;
 
     const rejected = applications.filter(
@@ -40,12 +46,11 @@ const Dashboard = () => {
     ).length;
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8">
-
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen bg-gray-100 py-10">
+            <div className="max-w-7xl mx-auto px-6">
 
                 <h1 className="text-4xl font-bold text-blue-700 mb-8">
-                    Student Dashboard
+                    My Dashboard
                 </h1>
 
                 {/* Statistics */}
@@ -53,48 +58,36 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
                     <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h2 className="text-gray-500">
-                            Total Applications
-                        </h2>
-
-                        <p className="text-4xl font-bold text-blue-700 mt-3">
+                        <p className="text-gray-500">Applications</p>
+                        <h2 className="text-4xl font-bold text-blue-600 mt-2">
                             {total}
-                        </p>
+                        </h2>
                     </div>
 
                     <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h2 className="text-gray-500">
-                            Pending
-                        </h2>
-
-                        <p className="text-4xl font-bold text-yellow-500 mt-3">
+                        <p className="text-gray-500">Pending</p>
+                        <h2 className="text-4xl font-bold text-yellow-500 mt-2">
                             {pending}
-                        </p>
+                        </h2>
                     </div>
 
                     <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h2 className="text-gray-500">
-                            Accepted
+                        <p className="text-gray-500">Shortlisted</p>
+                        <h2 className="text-4xl font-bold text-purple-600 mt-2">
+                            {shortlisted}
                         </h2>
-
-                        <p className="text-4xl font-bold text-green-600 mt-3">
-                            {accepted}
-                        </p>
                     </div>
 
                     <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h2 className="text-gray-500">
-                            Rejected
+                        <p className="text-gray-500">Selected</p>
+                        <h2 className="text-4xl font-bold text-green-600 mt-2">
+                            {selected}
                         </h2>
-
-                        <p className="text-4xl font-bold text-red-600 mt-3">
-                            {rejected}
-                        </p>
                     </div>
 
                 </div>
 
-                {/* Applications */}
+                {/* Applications Table */}
 
                 <div className="bg-white rounded-xl shadow-lg p-6">
 
@@ -110,7 +103,7 @@ const Dashboard = () => {
 
                         <div className="overflow-x-auto">
 
-                            <table className="w-full border-collapse">
+                            <table className="w-full">
 
                                 <thead>
 
@@ -121,7 +114,15 @@ const Dashboard = () => {
                                         </th>
 
                                         <th className="p-3 text-left">
+                                            Role
+                                        </th>
+
+                                        <th className="p-3 text-left">
                                             Status
+                                        </th>
+
+                                        <th className="p-3 text-left">
+                                            Applied On
                                         </th>
 
                                     </tr>
@@ -142,18 +143,31 @@ const Dashboard = () => {
                                             </td>
 
                                             <td className="p-3">
+                                                {application.companyId?.title}
+                                            </td>
+
+                                            <td className="p-3">
 
                                                 <span
-                                                    className={`px-3 py-1 rounded-full text-white text-sm ${application.status === "Accepted"
-                                                        ? "bg-green-600"
-                                                        : application.status === "Rejected"
-                                                            ? "bg-red-600"
-                                                            : "bg-yellow-500"
+                                                    className={`px-3 py-1 rounded-full text-white text-sm
+                                                    ${application.status === "Selected"
+                                                            ? "bg-green-600"
+                                                            : application.status === "Shortlisted"
+                                                                ? "bg-purple-600"
+                                                                : application.status === "Rejected"
+                                                                    ? "bg-red-600"
+                                                                    : "bg-yellow-500"
                                                         }`}
                                                 >
                                                     {application.status}
                                                 </span>
 
+                                            </td>
+
+                                            <td className="p-3">
+                                                {new Date(
+                                                    application.createdAt
+                                                ).toLocaleDateString()}
                                             </td>
 
                                         </tr>
@@ -171,7 +185,6 @@ const Dashboard = () => {
                 </div>
 
             </div>
-
         </div>
     );
 };
