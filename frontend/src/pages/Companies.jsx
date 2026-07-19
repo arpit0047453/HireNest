@@ -57,15 +57,16 @@ const Companies = () => {
 
             <div className="max-w-7xl mx-auto px-6">
 
-                <h1 className="text-4xl font-bold text-center text-blue-700 mb-8">
-                    Available Internships
-                </h1>
+                <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+                    Browse internships from top companies, explore opportunities,
+                    and apply with a single click to kickstart your career.
+                </p>
 
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
 
                     <input
                         type="text"
-                        placeholder="Search company, role or location..."
+                        placeholder="🔍 Search company, role or location..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="w-full md:w-96 border rounded-lg px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -73,7 +74,7 @@ const Companies = () => {
 
                     <div className="bg-white px-6 py-3 rounded-lg shadow">
                         <span className="font-semibold">
-                            Total Internships:
+                            📊 Total Internships:
                         </span>{" "}
                         {filteredCompanies.length}
                     </div>
@@ -86,17 +87,16 @@ const Companies = () => {
 
                         <div
                             key={company._id}
-                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 p-6"
+                            className="bg-white rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 p-6 border border-gray-100"
                         >
 
-                            <h2 className="text-2xl font-bold text-blue-700 mb-2">
-                                {company.companyName}
+                            <h2 className="text-2xl font-bold text-blue-700 mb-2 flex items-center gap-2">
+                                🏢 {company.companyName}
                             </h2>
 
-                            <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm mb-4">
-                                {company.title}
+                            <span className="inline-flex items-center bg-indigo-100 text-indigo-700 px-3 py-2 rounded-full text-sm font-semibold mb-4">
+                                💼 {company.title}
                             </span>
-
                             <div className="space-y-2 text-gray-700">
 
                                 <p>
@@ -126,9 +126,9 @@ const Companies = () => {
 
                             <button
                                 onClick={() => handleApply(company._id)}
-                                className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
+                                className="mt-6 w-full bg-blue-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105"
                             >
-                                Apply Now
+                                🚀 Apply Now
                             </button>
 
                         </div>
@@ -141,7 +141,7 @@ const Companies = () => {
                     <div className="text-center mt-20">
 
                         <h2 className="text-2xl font-semibold text-gray-600">
-                            No internships found.
+                            😕 No internships found.
                         </h2>
 
                         <p className="text-gray-500 mt-2">
