@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Companies = () => {
     const [companies, setCompanies] = useState([]);
@@ -28,13 +29,13 @@ const Companies = () => {
                 companyId,
             });
 
-            alert("Application submitted successfully!");
+            toast.success("Application submitted successfully!");
         } catch (error) {
             console.log(error);
 
-            alert(
+            toast.error(
                 error.response?.data?.message ||
-                "Application failed!"
+                "Application Failed!"
             );
         }
     };

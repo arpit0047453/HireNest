@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -113,10 +114,10 @@ const Profile = () => {
                 updatedFormData
             );
 
-            alert("✅ Profile updated successfully!");
+            toast.success("Profile saved successfully!");
         } catch (error) {
             console.log(error);
-            alert("Failed to save profile");
+            toast.error("Failed to save profile");
         }
     };
 

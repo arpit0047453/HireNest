@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -23,15 +24,19 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await API.post("/user/login", formData);
+            const res = await API.post("/auth/login", formData);
+
+            console.log("LOGIN RESPONSE:", res.data);
 
             login(res.data);
 
-            alert("Login Successful!");
+            console.log("LOCAL STORAGE:", localStorage.getItem("user"));
+
+            toast.success("Login Successful!");
 
             navigate("/");
         } catch (error) {
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Login Failed"
             );

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const AdminCompanies = () => {
     const { user } = useContext(AuthContext);
@@ -45,10 +46,10 @@ const AdminCompanies = () => {
         try {
             if (editingId) {
                 await API.put(`/company/${editingId}`, formData);
-                alert("Internship updated!");
+                toast.success("Internship updated successfully!");
             } else {
                 await API.post("/company", formData);
-                alert("Internship created!");
+                toast.success("Internship created successfully!");
             }
 
             setFormData({
@@ -91,11 +92,16 @@ const AdminCompanies = () => {
         try {
             await API.delete(`/company/${id}`);
 
-            alert("Deleted successfully");
+            toast.success("Internship deleted successfully!");
 
             fetchCompanies();
         } catch (error) {
             console.log(error);
+
+            toast.error(
+                error.response?.data?.message ||
+                "Something went wrong!"
+            );
         }
     };
 
