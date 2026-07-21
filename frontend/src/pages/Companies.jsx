@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -7,6 +8,7 @@ const Companies = () => {
     const [companies, setCompanies] = useState([]);
     const [search, setSearch] = useState("");
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCompanies();
@@ -130,6 +132,13 @@ const Companies = () => {
                                 className="mt-6 w-full bg-blue-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105"
                             >
                                 🚀 Apply Now
+                            </button>
+
+                            <button
+                                onClick={() => navigate(`/companies/${company._id}`)}
+                                className="mt-3 w-full border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 rounded-xl transition"
+                            >
+                                View Details
                             </button>
 
                         </div>

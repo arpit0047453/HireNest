@@ -55,7 +55,7 @@ const Dashboard = () => {
 
                 {/* Statistics */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
 
                     <div className="bg-white rounded-xl shadow-lg p-6">
                         <p className="text-gray-500">Applications</p>
@@ -82,6 +82,13 @@ const Dashboard = () => {
                         <p className="text-gray-500">Selected</p>
                         <h2 className="text-4xl font-bold text-green-600 mt-2">
                             {selected}
+                        </h2>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-lg p-6">
+                        <p className="text-gray-500">Rejected</p>
+
+                        <h2 className="text-4xl font-bold text-red-600 mt-2">
+                            {rejected}
                         </h2>
                     </div>
 

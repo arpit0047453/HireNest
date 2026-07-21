@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import AdminApplications from "./pages/AdminApplications";
 import AdminCompanies from "./pages/AdminCompanies";
 import AdminDashboard from "./pages/AdminDashboard";
+import CompanyDetails from "./pages/CompanyDetails";
 
 function App() {
   return (
@@ -24,6 +25,15 @@ function App() {
 
       <div className="pt-4">
         <Routes>
+
+          <Route
+            path="/companies/:id"
+            element={
+              <ProtectedRoute>
+                <CompanyDetails />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/"
