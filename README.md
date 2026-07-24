@@ -1,4 +1,11 @@
 # 🚀 HireNest – MERN Internship Management Portal
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
 
 > A full-stack MERN web application that streamlines the internship application process for **students** and **administrators** with secure authentication, company management, application tracking, and resume uploads.
 
@@ -8,7 +15,24 @@
 
 HireNest is a modern Internship Management Portal built using the MERN Stack. It allows students to discover internship opportunities, apply online, upload resumes, and monitor application progress, while administrators can efficiently manage companies, applications, and recruitment workflows through a dedicated dashboard.
 
+> **Note:** This project is under active development. New features and improvements are being added regularly.
+
 ---
+## 🚀 Project Status
+
+✅ Authentication Complete
+
+✅ Resume Upload Complete
+
+✅ Company Management Complete
+
+✅ Student Dashboard Complete
+
+✅ Admin Dashboard Complete
+
+🚧 Deployment In Progress
+
+🚧 Forgot Password Feature Planned
 
 ## ✨ Key Features
 
@@ -108,8 +132,23 @@ HireNest
 
 ## 📸 Project Preview
 
-> Screenshots will be added soon.
+## 📸 Project Preview
 
+### 🏠 Home
+
+![Home](screenshots/home.png)
+
+### 🏢 Companies
+
+![Companies](screenshots/companies.png)
+
+### 📊 Student Dashboard
+
+![Dashboard](screenshots/student-dashboard.png)
+
+### 👨‍💼 Admin Dashboard
+
+![Admin](screenshots/admin-dashboard.png)
 - Home Page
 - Student Dashboard
 - Student Profile
@@ -121,7 +160,11 @@ HireNest
 
 ## 🎥 Project Demo
 
-Demo videos will be uploaded soon.
+## 🎥 Demo
+
+A complete walkthrough of both the Student and Admin modules has been recorded.
+
+Deployment and public demo links will be added after project deployment.
 
 ---
 
@@ -218,7 +261,12 @@ If you'd like to contribute:
 
 GitHub
 
-https://github.com/arpitomre18
+## 👨‍💻 Author
+
+**Arpit Omre**
+
+- GitHub: https://github.com/arpitomre18
+- LinkedIn: linkedin.com/in/arpit-omre-b60871292
 
 LinkedIn
 
@@ -231,3 +279,7 @@ LinkedIn
 If you found this project useful, consider giving it a ⭐ on GitHub.
 
 It motivates me to build more projects.
+
+## 📄 License
+
+This project is licensed under the MIT License.

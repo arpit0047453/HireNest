@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
     const [applications, setApplications] = useState([]);
@@ -24,6 +25,29 @@ const Dashboard = () => {
             setApplications(myApplications);
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const handleWithdraw = async (id) => {
+        const confirmWithdraw = window.confirm(
+            "Are you sure you want to withdraw this application?"
+        );
+
+        if (!confirmWithdraw) return;
+
+        try {
+            await API.delete(`/application/${id}`);
+
+            toast.success("Application withdrawn successfully!");
+
+            fetchApplications();
+        } catch (error) {
+            console.log(error);
+
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to withdraw application."
+            );
         }
     };
 
@@ -132,6 +156,10 @@ const Dashboard = () => {
                                             Applied On
                                         </th>
 
+                                        <th className="p-3 text-center">
+                                            Action
+                                        </th>
+
                                     </tr>
 
                                 </thead>
@@ -175,6 +203,21 @@ const Dashboard = () => {
                                                 {new Date(
                                                     application.createdAt
                                                 ).toLocaleDateString()}
+                                            </td>
+
+                                            <td className="p-3 text-center">
+                                                {application.status === "Pending" ? (
+                                                    <button
+                                                        onClick={() => handleWithdraw(application._id)}
+                                                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+                                                    >
+                                                        Withdraw
+                                                    </button>
+                                                ) : (
+                                                    <span className="text-gray-500 text-sm">
+                                                        Not Allowed
+                                                    </span>
+                                                )}
                                             </td>
 
                                         </tr>
