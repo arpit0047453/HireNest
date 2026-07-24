@@ -6,6 +6,26 @@ import {
 
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+} from "chart.js";
+
+import { Pie, Bar } from "react-chartjs-2";
+
+ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    BarElement
+);
 
 const AdminDashboard = () => {
     const { user } = useContext(AuthContext);
@@ -15,6 +35,12 @@ const AdminDashboard = () => {
         totalCompanies: 0,
         totalApplications: 0,
         selectedStudents: 0,
+
+        pending: 0,
+        shortlisted: 0,
+        rejected: 0,
+
+        companyStats: [],
     });
 
     useEffect(() => {
@@ -37,6 +63,48 @@ const AdminDashboard = () => {
             </div>
         );
     }
+
+    // Pie Chart Data
+    const pieData = {
+        labels: [
+            "Pending",
+            "Shortlisted",
+            "Selected",
+            "Rejected",
+        ],
+        datasets: [
+            {
+                data: [
+                    stats.pending,
+                    stats.shortlisted,
+                    stats.selectedStudents,
+                    stats.rejected,
+                ],
+                backgroundColor: [
+                    "#EAB308",
+                    "#9333EA",
+                    "#16A34A",
+                    "#DC2626",
+                ],
+            },
+        ],
+    };
+
+    // Bar Chart Data
+    const barData = {
+        labels: stats.companyStats.map(
+            (company) => company.company
+        ),
+        datasets: [
+            {
+                label: "Applications",
+                data: stats.companyStats.map(
+                    (company) => company.count
+                ),
+                backgroundColor: "#2563EB",
+            },
+        ],
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
@@ -115,6 +183,36 @@ const AdminDashboard = () => {
                         the HireNest platform. The statistics above provide a
                         quick overview of the current system.
                     </p>
+
+                </div>
+
+                {/* Charts */}
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+
+                    {/* Pie Chart */}
+
+                    <div className="bg-white rounded-xl shadow-lg p-6">
+
+                        <h2 className="text-2xl font-semibold mb-6">
+                            Application Status
+                        </h2>
+
+                        <Pie data={pieData} />
+
+                    </div>
+
+                    {/* Bar Chart */}
+
+                    <div className="bg-white rounded-xl shadow-lg p-6">
+
+                        <h2 className="text-2xl font-semibold mb-6">
+                            Applications by Company
+                        </h2>
+
+                        <Bar data={barData} />
+
+                    </div>
 
                 </div>
 
