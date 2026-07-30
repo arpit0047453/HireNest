@@ -17,6 +17,9 @@ import AdminApplications from "./pages/AdminApplications";
 import AdminCompanies from "./pages/AdminCompanies";
 import AdminDashboard from "./pages/AdminDashboard";
 import CompanyDetails from "./pages/CompanyDetails";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -25,6 +28,21 @@ function App() {
 
       <div className="pt-4">
         <Routes>
+
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword />}
+          />
+
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword />}
+          />
+
+          <Route
+            path="/verify-email/:token"
+            element={<VerifyEmail />}
+          />
 
           <Route
             path="/companies/:id"
