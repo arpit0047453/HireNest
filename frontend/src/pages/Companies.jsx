@@ -9,6 +9,7 @@ const Companies = () => {
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [applyingId, setApplyingId] = useState(null);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -39,7 +40,11 @@ const Companies = () => {
     };
 
     const handleApply = async (companyId) => {
+
         try {
+
+            setApplyingId(companyId);
+
             await API.post("/application", {
                 studentName: user.name,
                 studentEmail: user.email,
@@ -47,14 +52,22 @@ const Companies = () => {
             });
 
             toast.success("Application submitted successfully!");
+
         } catch (error) {
-            console.log(error);
+
+            console.error(error);
 
             toast.error(
                 error.response?.data?.message ||
                 "Application Failed!"
             );
+
+        } finally {
+
+            setApplyingId(null);
+
         }
+
     };
 
     const filteredCompanies = companies.filter(
@@ -148,9 +161,14 @@ const Companies = () => {
 
                             <button
                                 onClick={() => handleApply(company._id)}
-                                className="mt-6 w-full bg-blue-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105"
+                                disabled={applyingId === company._id}
+                                className="mt-6 w-full bg-blue-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105"
                             >
-                                🚀 Apply Now
+                                {
+                                    applyingId === company._id
+                                        ? "Applying..."
+                                        : "🚀 Apply Now"
+                                }
                             </button>
 
                             <button
@@ -167,15 +185,26 @@ const Companies = () => {
                 </div>
 
                 {filteredCompanies.length === 0 && (
-                    <div className="text-center mt-20">
+                    <div className="bg-white rounded-2xl shadow-lg p-10 text-center mt-10">
 
-                        <h2 className="text-2xl font-semibold text-gray-600">
-                            😕 No internships found.
+                        <div className="text-6xl mb-4">
+                            🔍
+                        </div>
+
+                        <h2 className="text-2xl font-bold text-gray-700">
+                            No internships found
                         </h2>
 
-                        <p className="text-gray-500 mt-2">
-                            Try searching with another keyword.
+                        <p className="text-gray-500 mt-3">
+                            We couldn't find any internships matching your search.
                         </p>
+
+                        <button
+                            onClick={() => setSearch("")}
+                            className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+                        >
+                            Clear Search
+                        </button>
 
                     </div>
                 )}
