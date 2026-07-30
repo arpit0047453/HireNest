@@ -13,6 +13,8 @@ const Login = () => {
         password: "",
     });
 
+    const [showResend, setShowResend] = useState(false);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -35,12 +37,51 @@ const Login = () => {
             toast.success("Login Successful!");
 
             navigate("/");
+        }
+        catch (error) {
+
+            const message =
+                error.response?.data?.message ||
+                "Login Failed";
+
+            toast.error(message);
+
+            if (
+                message ===
+                "Please verify your email before logging in."
+            ) {
+                setShowResend(true);
+            } else {
+                setShowResend(false);
+            }
+
+        }
+    };
+
+    const resendVerification = async () => {
+
+        try {
+
+            await API.post(
+                "/auth/resend-verification",
+                {
+                    email: formData.email,
+                }
+            );
+
+            toast.success(
+                "Verification email sent successfully."
+            );
+
         } catch (error) {
+
             toast.error(
                 error.response?.data?.message ||
-                "Login Failed"
+                "Unable to resend email."
             );
+
         }
+
     };
 
     return (
@@ -90,6 +131,20 @@ const Login = () => {
                     >
                         Login
                     </button>
+
+                    {
+                        showResend && (
+
+                            <button
+                                type="button"
+                                onClick={resendVerification}
+                                className="w-full mt-3 border border-blue-600 text-blue-600 py-3 rounded-lg hover:bg-blue-50 transition"
+                            >
+                                Resend Verification Email
+                            </button>
+
+                        )
+                    }
 
                 </form>
 

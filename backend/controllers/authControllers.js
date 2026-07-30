@@ -18,7 +18,6 @@ const generateToken = (id) => {
 
 exports.registerUser = async (req, res) => {
     try {
-        console.log("NEW REGISTER FUNCTION IS RUNNING");
         const { name, email, password } = req.body;
 
         if (password.length < 6) {
@@ -51,7 +50,6 @@ exports.registerUser = async (req, res) => {
 
         // Generate email verification token
         const verificationToken = crypto.randomBytes(32).toString("hex");
-        console.log("Verification Token:", verificationToken);
 
         const user = await User.create({
             name,
@@ -137,7 +135,6 @@ exports.loginUser = async (req, res) => {
             email,
         });
 
-        console.log("LOGIN USER:", user);
 
         if (
             user &&
@@ -338,5 +335,90 @@ exports.verifyEmail = async (req, res) => {
         res.status(500).json({
             message: error.message,
         });
+    }
+};
+
+// Resend Verification Email
+
+exports.resendVerificationEmail = async (req, res) => {
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "No account found with this email.",
+            });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({
+                message: "Email is already verified.",
+            });
+        }
+
+        const verificationToken =
+            crypto.randomBytes(32).toString("hex");
+
+        user.verificationToken = verificationToken;
+
+        user.verificationTokenExpires =
+            Date.now() + 24 * 60 * 60 * 1000;
+
+        await user.save();
+
+        const verificationLink =
+            `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+
+        await sendEmail(
+            user.email,
+            "Verify Your HireNest Account",
+            `
+            <div style="font-family:Arial;padding:20px">
+
+                <h2 style="color:#2563EB;">
+                    Verify Your HireNest Account
+                </h2>
+
+                <p>Hello <strong>${user.name}</strong>,</p>
+
+                <p>
+                    Here is your new verification link.
+                </p>
+
+                <a
+                    href="${verificationLink}"
+                    style="
+                        display:inline-block;
+                        padding:12px 22px;
+                        background:#2563EB;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:6px;
+                    "
+                >
+                    Verify Email
+                </a>
+
+                <p style="margin-top:20px;">
+                    This link expires in 24 hours.
+                </p>
+
+            </div>
+            `
+        );
+
+        res.json({
+            message: "Verification email sent successfully.",
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message,
+        });
+
     }
 };

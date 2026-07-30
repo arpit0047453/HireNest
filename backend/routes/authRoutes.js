@@ -9,6 +9,7 @@ const {
     forgotPassword,
     resetPassword,
     verifyEmail,
+    resendVerificationEmail,
 } = require("../controllers/authControllers");
 
 const {
@@ -43,6 +44,12 @@ router.post(
 router.get(
     "/verify-email/:token",
     verifyEmail
+);
+
+// Resend Verification Email
+router.post(
+    "/resend-verification",
+    resendVerificationEmail
 );
 
 // Get Profile

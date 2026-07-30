@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Companies = () => {
     const [companies, setCompanies] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -15,12 +17,25 @@ const Companies = () => {
     }, []);
 
     const fetchCompanies = async () => {
+
         try {
+
+            setLoading(true);
+
             const res = await API.get("/company");
+
             setCompanies(res.data);
+
         } catch (error) {
-            console.log(error);
+
+            console.error(error);
+
+        } finally {
+
+            setLoading(false);
+
         }
+
     };
 
     const handleApply = async (companyId) => {
@@ -54,6 +69,10 @@ const Companies = () => {
                 .toLowerCase()
                 .includes(search.toLowerCase())
     );
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
