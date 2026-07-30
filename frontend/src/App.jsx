@@ -20,6 +20,8 @@ import CompanyDetails from "./pages/CompanyDetails";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -28,6 +30,11 @@ function App() {
 
       <div className="pt-4">
         <Routes>
+
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
 
           <Route
             path="/forgot-password"
@@ -124,6 +131,8 @@ function App() {
 
         </Routes>
       </div>
+
+      <Footer />
 
     </BrowserRouter>
   );

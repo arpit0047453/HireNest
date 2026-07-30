@@ -19,8 +19,13 @@ const generateToken = (id) => {
 exports.registerUser = async (req, res) => {
     try {
         console.log("NEW REGISTER FUNCTION IS RUNNING");
-        const { name, email, password } =
-            req.body;
+        const { name, email, password } = req.body;
+
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters.",
+            });
+        }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

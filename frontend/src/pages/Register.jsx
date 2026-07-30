@@ -6,10 +6,18 @@ import { toast } from "react-toastify";
 const Register = () => {
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [showConfirmPassword, setShowConfirmPassword] =
+        useState(false);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
     });
 
     const handleChange = (e) => {
@@ -22,17 +30,45 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            await API.post("/auth/register", formData);
+        if (formData.password.length < 6) {
+            return toast.error(
+                "Password must be at least 6 characters."
+            );
+        }
 
-            toast.success("Registration Successful!");
+        if (
+            formData.password !==
+            formData.confirmPassword
+        ) {
+            return toast.error(
+                "Passwords do not match."
+            );
+        }
+
+        try {
+            setLoading(true);
+
+            await API.post("/auth/register", {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+            });
+
+            toast.success(
+                "Registration successful! Please verify your email."
+            );
 
             navigate("/login");
+
         } catch (error) {
+
             toast.error(
                 error.response?.data?.message ||
                 "Registration Failed"
             );
+
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -56,6 +92,7 @@ const Register = () => {
                         placeholder="Full Name"
                         value={formData.name}
                         onChange={handleChange}
+                        required
                         className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
@@ -65,23 +102,82 @@ const Register = () => {
                         placeholder="Email Address"
                         value={formData.email}
                         onChange={handleChange}
+                        required
                         className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
+                    <div className="relative">
+
+                        <input
+                            type={
+                                showPassword
+                                    ? "text"
+                                    : "password"
+                            }
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            className="w-full border rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowPassword(
+                                    !showPassword
+                                )
+                            }
+                            className="absolute right-4 top-3 text-gray-500"
+                        >
+                            {showPassword ? "🙈" : "👁"}
+                        </button>
+
+                    </div>
+
+                    <div className="relative">
+
+                        <input
+                            type={
+                                showConfirmPassword
+                                    ? "text"
+                                    : "password"
+                            }
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            value={
+                                formData.confirmPassword
+                            }
+                            onChange={handleChange}
+                            required
+                            className="w-full border rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowConfirmPassword(
+                                    !showConfirmPassword
+                                )
+                            }
+                            className="absolute right-4 top-3 text-gray-500"
+                        >
+                            {showConfirmPassword
+                                ? "🙈"
+                                : "👁"}
+                        </button>
+
+                    </div>
 
                     <button
                         type="submit"
+                        disabled={loading}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
                     >
-                        Register
+                        {loading
+                            ? "Creating Account..."
+                            : "Register"}
                     </button>
 
                 </form>
