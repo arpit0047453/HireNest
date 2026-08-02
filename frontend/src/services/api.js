@@ -2,9 +2,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const API = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: "https://hirenest-sua2.onrender.com/api",
 });
-
 // Attach JWT Token
 API.interceptors.request.use((config) => {
     const user = JSON.parse(localStorage.getItem("user"));
