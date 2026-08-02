@@ -42,9 +42,7 @@ const Login = () => {
 
             const message =
                 error.response?.data?.message ||
-                "Login Failed";
-
-            toast.error(message);
+                "";
 
             if (
                 message ===
@@ -74,12 +72,7 @@ const Login = () => {
             );
 
         } catch (error) {
-
-            toast.error(
-                error.response?.data?.message ||
-                "Unable to resend email."
-            );
-
+            console.error(error);
         }
 
     };

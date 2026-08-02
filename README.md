@@ -266,7 +266,7 @@ GitHub
 **Arpit Omre**
 
 - GitHub: https://github.com/arpitomre18
-- LinkedIn: linkedin.com/in/arpit-omre-b60871292
+- LinkedIn: linkedin.com/in/arpitomre18
 
 LinkedIn
 
