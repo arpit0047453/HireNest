@@ -1,4 +1,4 @@
-const Profile = require("../models/Profile");
+const Profile = require("../models/ProfileTemp");
 
 const saveProfile = async (req, res) => {
     try {
