@@ -15,7 +15,6 @@ const generateToken = (id) => {
 };
 
 // Register
-
 exports.registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -34,8 +33,7 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        const existingUser =
-            await User.findOne({ email });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             return res.status(400).json({
@@ -44,11 +42,8 @@ exports.registerUser = async (req, res) => {
         }
 
         const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        const hashedPassword =
-            await bcrypt.hash(password, salt);
-
-        // Generate email verification token
         const verificationToken = crypto.randomBytes(32).toString("hex");
 
         const user = await User.create({
@@ -56,73 +51,63 @@ exports.registerUser = async (req, res) => {
             email,
             password: hashedPassword,
             verificationToken,
-            verificationTokenExpires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+            verificationTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
         });
 
         const verificationLink =
             `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-        await sendEmail(
-            user.email,
-            "Verify Your HireNest Account",
-            `
-    <div style="font-family:Arial,sans-serif;padding:20px">
 
-        <h2 style="color:#2563EB;">
-            Welcome to HireNest 🎉
-        </h2>
-
-        <p>Hello <strong>${user.name}</strong>,</p>
-
-        <p>
-            Thank you for registering with HireNest.
-        </p>
-
-        <p>
-            Please verify your email address by clicking the button below.
-        </p>
-
-        <a
-            href="${verificationLink}"
-            style="
-                display:inline-block;
-                padding:12px 24px;
-                background:#2563EB;
-                color:white;
-                text-decoration:none;
-                border-radius:6px;
-            "
-        >
-            Verify Email
-        </a>
-
-        <p style="margin-top:20px">
-            This verification link expires in
-            <strong>24 hours</strong>.
-        </p>
-
-        <hr>
-
-        <small>
-            If you didn't create this account,
-            you can safely ignore this email.
-        </small>
-
-    </div>
-    `
-        );
-
+        // Send response immediately
         res.status(201).json({
             message:
                 "Registration successful! Please verify your email before logging in.",
         });
+
+        // Send email in background
+        sendEmail(
+            user.email,
+            "Verify Your HireNest Account",
+            `
+            <div style="font-family:Arial,sans-serif;padding:20px">
+
+                <h2 style="color:#2563EB;">
+                    Welcome to HireNest 🎉
+                </h2>
+
+                <p>Hello <strong>${user.name}</strong>,</p>
+
+                <p>Thank you for registering with HireNest.</p>
+
+                <p>Please verify your email by clicking below.</p>
+
+                <a
+                    href="${verificationLink}"
+                    style="
+                        display:inline-block;
+                        padding:12px 24px;
+                        background:#2563EB;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:6px;
+                    "
+                >
+                    Verify Email
+                </a>
+
+                <p style="margin-top:20px">
+                    This verification link expires in <strong>24 hours</strong>.
+                </p>
+
+            </div>
+            `
+        ).catch(err => console.error("Email Error:", err));
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
         });
     }
 };
-
-// Login
 
 // Login
 
@@ -368,7 +353,7 @@ exports.resendVerificationEmail = async (req, res) => {
         await user.save();
 
         const verificationLink =
-            `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+            `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
         await sendEmail(
             user.email,
