@@ -60,8 +60,7 @@ exports.registerUser = async (req, res) => {
         });
 
         const verificationLink =
-            `http://localhost:5173/verify-email/${verificationToken}`;
-
+            `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
         await sendEmail(
             user.email,
             "Verify Your HireNest Account",
@@ -209,8 +208,7 @@ exports.forgotPassword = async (req, res) => {
         await user.save();
 
         const resetLink =
-            `http://localhost:5173/reset-password/${resetToken}`;
-
+            `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
         await sendEmail(
             user.email,
             "Reset Your HireNest Password",

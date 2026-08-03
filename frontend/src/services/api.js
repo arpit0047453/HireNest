@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const API = axios.create({
-    baseURL: "https://hirenest-sua2.onrender.com/api",
+    baseURL: import.meta.env.VITE_API_URL,
 });
 // Attach JWT Token
 API.interceptors.request.use((config) => {
