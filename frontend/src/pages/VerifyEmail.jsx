@@ -1,20 +1,23 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import API from "../services/api";
 import { toast } from "react-toastify";
 
 const VerifyEmail = () => {
-    const { token } = useParams();
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
 
     useEffect(() => {
-        verify();
-    }, []);
+        if (token) {
+            verify();
+        } else {
+            toast.error("Invalid verification link.");
+        }
+    }, [token]);
 
     const verify = async () => {
         try {
-            const res = await API.get(
-                `/auth/verify-email/${token}`
-            );
+            const res = await API.get(`/auth/verify-email/${token}`);
 
             toast.success(res.data.message);
 
