@@ -7,7 +7,7 @@ const sendEmail = async (to, subject, html) => {
             {
                 sender: {
                     name: "HireNest",
-                    email: "arpitomre@gmail.com"   // Your verified sender email in Brevo
+                    email: "arpitomre@gmail.com"
                 },
                 to: [
                     {
@@ -15,12 +15,18 @@ const sendEmail = async (to, subject, html) => {
                     }
                 ],
                 subject: subject,
-                htmlContent: html
+
+                // IMPORTANT
+                htmlContent: html,
+
+                // Optional plain text version
+                textContent: "Please use an HTML email client to view this email."
             },
             {
                 headers: {
-                    "api-key": process.env.BREVO_API_KEY,
-                    "Content-Type": "application/json"
+                    "accept": "application/json",
+                    "content-type": "application/json",
+                    "api-key": process.env.BREVO_API_KEY
                 }
             }
         );

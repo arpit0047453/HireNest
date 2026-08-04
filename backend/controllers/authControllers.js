@@ -101,12 +101,14 @@ exports.registerUser = async (req, res) => {
 
         await sendEmail(
             user.email,
-            "Verify Your HireNest Account",
+            // "Verify Your HireNest Account"
+            "HireNest TEST 123",
             `
     <div style="font-family:Arial,sans-serif;padding:20px">
 
         <h2 style="color:#2563EB;">
-            Welcome to HireNest 🎉
+            // Welcome to HireNest 🎉
+            Welcome to HireNest TEST 123 🎉
         </h2>
 
         <p>Hello <strong>${user.name}</strong>,</p>
