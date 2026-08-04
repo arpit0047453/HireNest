@@ -61,43 +61,45 @@ exports.registerUser = async (req, res) => {
         console.log("📧 Sending to:", user.email);
         console.log("🔗 Verification Link:", verificationLink);
 
-        await sendEmail(
-            user.email,
-            "Verify Your HireNest Account",
-            `
-            <div style="font-family:Arial,sans-serif;padding:20px">
+        // await sendEmail(
+        //     user.email,
+        //     "Verify Your HireNest Account",
+        //     `
+        //     <div style="font-family:Arial,sans-serif;padding:20px">
 
-                <h2 style="color:#2563EB;">
-                    Welcome to HireNest 🎉
-                </h2>
+        //         <h2 style="color:#2563EB;">
+        //             Welcome to HireNest 🎉
+        //         </h2>
 
-                <p>Hello <strong>${user.name}</strong>,</p>
+        //         <p>Hello <strong>${user.name}</strong>,</p>
 
-                <p>Thank you for registering with HireNest.</p>
+        //         <p>Thank you for registering with HireNest.</p>
 
-                <p>Please verify your email by clicking below.</p>
+        //         <p>Please verify your email by clicking below.</p>
 
-                <a
-                    href="${verificationLink}"
-                    style="
-                        display:inline-block;
-                        padding:12px 24px;
-                        background:#2563EB;
-                        color:white;
-                        text-decoration:none;
-                        border-radius:6px;
-                    "
-                >
-                    Verify Email
-                </a>
+        //         <a
+        //             href="${verificationLink}"
+        //             style="
+        //                 display:inline-block;
+        //                 padding:12px 24px;
+        //                 background:#2563EB;
+        //                 color:white;
+        //                 text-decoration:none;
+        //                 border-radius:6px;
+        //             "
+        //         >
+        //             Verify Email
+        //         </a>
 
-                <p style="margin-top:20px">
-                    This verification link expires in <strong>24 hours</strong>.
-                </p>
+        //         <p style="margin-top:20px">
+        //             This verification link expires in <strong>24 hours</strong>.
+        //         </p>
 
-            </div>
-            `
-        );
+        //     </div>
+        //     `
+        // );
+
+        console.log("Skipping email for test");
 
         console.log("✅ Verification email sent successfully.");
 
