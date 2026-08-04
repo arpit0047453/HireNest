@@ -11,13 +11,21 @@ const adminRoutes = require("./routes/adminRoutes");
 
 dotenv.config();
 
+// =====================
+// Debug Environment Variables
+// =====================
+console.log("==================================");
+console.log("EMAIL_USER =", process.env.EMAIL_USER);
+console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
+console.log("PORT =", process.env.PORT);
+console.log("==================================");
+
 connectDB();
 
 const app = express();
 
 // Middlewares
 app.use(cors());
-
 app.use(express.json());
 
 // Static folder for uploaded resumes
@@ -71,7 +79,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(
-        `Server running on port ${PORT}`
-    );
+    console.log(`🚀 Server running on port ${PORT}`);
 });
