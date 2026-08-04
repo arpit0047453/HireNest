@@ -57,14 +57,11 @@ exports.registerUser = async (req, res) => {
         const verificationLink =
             `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
-        // Send response immediately
-        res.status(201).json({
-            message:
-                "Registration successful! Please verify your email before logging in.",
-        });
+        console.log("🚀 About to send verification email...");
+        console.log("📧 Sending to:", user.email);
+        console.log("🔗 Verification Link:", verificationLink);
 
-        // Send email in background
-        sendEmail(
+        await sendEmail(
             user.email,
             "Verify Your HireNest Account",
             `
@@ -100,10 +97,19 @@ exports.registerUser = async (req, res) => {
 
             </div>
             `
-        ).catch(err => console.error("Email Error:", err));
+        );
+
+        console.log("✅ Verification email sent successfully.");
+
+        return res.status(201).json({
+            message:
+                "Registration successful! Please verify your email before logging in.",
+        });
 
     } catch (error) {
-        res.status(500).json({
+        console.error("❌ Register Error:", error);
+
+        return res.status(500).json({
             message: error.message,
         });
     }
