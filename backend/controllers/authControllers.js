@@ -99,8 +99,11 @@ exports.registerUser = async (req, res) => {
         //     `
         // );
 
-        console.log("Skipping email for test");
-
+        await sendEmail(
+            user.email,
+            "Verify Your HireNest Account",
+            `...your HTML email...`
+        );
         console.log("✅ Verification email sent successfully.");
 
         return res.status(201).json({
