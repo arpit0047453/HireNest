@@ -1,76 +1,45 @@
-// const nodemailer = require("nodemailer");
-
-// const transporter = nodemailer.createTransport({
-//     host: "smtp-relay.brevo.com",
-//     port: 587,
-//     secure: false,
-//     auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS,
-//     },
-// });
-
-// transporter.verify(function (error, success) {
-//     if (error) {
-//         console.error("SMTP Error:", error);
-//     } else {
-//         console.log("✅ Brevo SMTP Connected Successfully");
-//     }
-// });
-
-// const sendEmail = async (to, subject, html) => {
-//     try {
-//         const info = await transporter.sendMail({
-//             from: `"HireNest" <${process.env.EMAIL_USER}>`,
-//             to,
-//             subject,
-//             html,
-//         });
-
-//         console.log("✅ Email sent:", info.messageId);
-//     } catch (error) {
-//         console.error("❌ Email Error:", error);
-//     }
-// };
-
-// module.exports = sendEmail;
-
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-});
-
-transporter.verify((error, success) => {
-    if (error) {
-        console.error("❌ SMTP Verify Error:", error);
-    } else {
-        console.log("✅ SMTP Connected Successfully");
-    }
-});
+const axios = require("axios");
 
 const sendEmail = async (to, subject, html) => {
-    console.log("📧 Sending email to:", to);
+    try {
+        const response = await axios.post(
+            "https://api.brevo.com/v3/smtp/email",
+            {
+                sender: {
+                    name: "HireNest",
+                    email: "arpitomre@gmail.com"   // Your verified sender email in Brevo
+                },
+                to: [
+                    {
+                        email: to
+                    }
+                ],
+                subject: subject,
+                htmlContent: html
+            },
+            {
+                headers: {
+                    "api-key": process.env.BREVO_API_KEY,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
 
-    const info = await transporter.sendMail({
-        from: `"HireNest" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        html,
-    });
+        console.log("✅ Email sent successfully");
+        console.log(response.data);
 
-    console.log("✅ Email Sent:", info.messageId);
+    } catch (error) {
 
-    return info;
+        console.error("❌ Brevo API Error");
+
+        if (error.response) {
+            console.error(error.response.data);
+        } else {
+            console.error(error.message);
+        }
+
+        throw error;
+    }
 };
 
 module.exports = sendEmail;
