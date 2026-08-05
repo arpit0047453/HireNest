@@ -41,10 +41,11 @@ router.post(
 );
 
 // Verify Email
-router.get(
-    "/verify-email/:token",
-    verifyEmail
-);
+router.get("/verify-email/:token", (req, res, next) => {
+    console.log("✅ Verify Route Hit");
+    console.log("Token:", req.params.token);
+    next();
+}, verifyEmail);
 
 // Resend Verification Email
 router.post(
