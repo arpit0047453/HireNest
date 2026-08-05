@@ -11,14 +11,6 @@ const adminRoutes = require("./routes/adminRoutes");
 
 dotenv.config();
 
-// =====================
-// Debug Environment Variables
-// =====================
-console.log("==================================");
-console.log("EMAIL_USER =", process.env.EMAIL_USER);
-console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
-console.log("PORT =", process.env.PORT);
-console.log("==================================");
 
 connectDB();
 

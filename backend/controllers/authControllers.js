@@ -57,47 +57,6 @@ exports.registerUser = async (req, res) => {
         const verificationLink =
             `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
-        console.log("🚀 About to send verification email...");
-        console.log("📧 Sending to:", user.email);
-        console.log("🔗 Verification Link:", verificationLink);
-
-        // await sendEmail(
-        //     user.email,
-        //     "Verify Your HireNest Account",
-        //     `
-        //     <div style="font-family:Arial,sans-serif;padding:20px">
-
-        //         <h2 style="color:#2563EB;">
-        //             Welcome to HireNest 🎉
-        //         </h2>
-
-        //         <p>Hello <strong>${user.name}</strong>,</p>
-
-        //         <p>Thank you for registering with HireNest.</p>
-
-        //         <p>Please verify your email by clicking below.</p>
-
-        //         <a
-        //             href="${verificationLink}"
-        //             style="
-        //                 display:inline-block;
-        //                 padding:12px 24px;
-        //                 background:#2563EB;
-        //                 color:white;
-        //                 text-decoration:none;
-        //                 border-radius:6px;
-        //             "
-        //         >
-        //             Verify Email
-        //         </a>
-
-        //         <p style="margin-top:20px">
-        //             This verification link expires in <strong>24 hours</strong>.
-        //         </p>
-
-        //     </div>
-        //     `
-        // );
 
         await sendEmail(
             user.email,
