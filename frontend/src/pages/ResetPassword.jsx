@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {
+    useSearchParams,
+    useNavigate,
+} from "react-router-dom";
 import API from "../services/api";
 import { toast } from "react-toastify";
 
 const ResetPassword = () => {
-    const { token } = useParams();
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
     const navigate = useNavigate();
 
     const [password, setPassword] = useState("");
