@@ -34,10 +34,30 @@ const VerifyEmail = () => {
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center">
-            <h1 className="text-2xl font-bold">
-                Verifying your email...
-            </h1>
+        <div className="min-h-screen flex justify-center items-center bg-gray-100 px-4">
+
+            <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 w-full max-w-md text-center">
+
+                <div className="text-5xl mb-5">
+                    📧
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl font-bold text-blue-700">
+                    Verifying Email
+                </h1>
+
+                <p className="mt-4 text-gray-600 leading-7">
+                    Please wait while we verify your email address.
+                </p>
+
+                <div className="mt-8 flex justify-center">
+
+                    <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+
+                </div>
+
+            </div>
+
         </div>
     );
 };

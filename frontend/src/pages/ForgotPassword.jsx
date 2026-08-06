@@ -22,26 +22,31 @@ const ForgotPassword = () => {
             );
 
             setEmail("");
+
         } catch (error) {
+
             toast.error(
                 error.response?.data?.message ||
                 "Unable to send reset link."
             );
+
         } finally {
+
             setLoading(false);
+
         }
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 sm:px-6 py-8">
 
-            <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-md">
+            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 sm:p-8">
 
-                <h1 className="text-3xl font-bold text-blue-700 text-center mb-2">
+                <h1 className="text-2xl sm:text-3xl font-bold text-blue-700 text-center mb-2">
                     Forgot Password
                 </h1>
 
-                <p className="text-gray-600 text-center mb-6">
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-6">
                     Enter your registered email address.
                 </p>
 
@@ -57,14 +62,14 @@ const ForgotPassword = () => {
                         onChange={(e) =>
                             setEmail(e.target.value)
                         }
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                         required
                     />
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm sm:text-base transition disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {loading
                             ? "Sending..."
@@ -73,7 +78,7 @@ const ForgotPassword = () => {
 
                 </form>
 
-                <p className="text-center mt-6">
+                <p className="text-center text-sm sm:text-base mt-6">
 
                     <Link
                         to="/login"

@@ -28,21 +28,15 @@ const Login = () => {
         try {
             const res = await API.post("/auth/login", formData);
 
-            console.log("LOGIN RESPONSE:", res.data);
-
             login(res.data);
-
-            console.log("LOCAL STORAGE:", localStorage.getItem("user"));
 
             toast.success("Login Successful!");
 
             navigate("/");
-        }
-        catch (error) {
+        } catch (error) {
 
             const message =
-                error.response?.data?.message ||
-                "";
+                error.response?.data?.message || "";
 
             if (
                 message ===
@@ -52,14 +46,11 @@ const Login = () => {
             } else {
                 setShowResend(false);
             }
-
         }
     };
 
     const resendVerification = async () => {
-
         try {
-
             await API.post(
                 "/auth/resend-verification",
                 {
@@ -74,15 +65,14 @@ const Login = () => {
         } catch (error) {
             console.error(error);
         }
-
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 sm:px-6 py-8">
 
-            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-8">
+            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 sm:p-8">
 
-                <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-center text-blue-700 mb-8">
                     Welcome Back 👋
                 </h1>
 
@@ -97,7 +87,7 @@ const Login = () => {
                         placeholder="Email Address"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
                     <input
@@ -106,13 +96,13 @@ const Login = () => {
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
                     <div className="flex justify-end">
                         <Link
                             to="/forgot-password"
-                            className="text-sm text-blue-600 hover:underline"
+                            className="text-xs sm:text-sm text-blue-600 hover:underline"
                         >
                             Forgot Password?
                         </Link>
@@ -120,28 +110,24 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm sm:text-base transition"
                     >
                         Login
                     </button>
 
-                    {
-                        showResend && (
-
-                            <button
-                                type="button"
-                                onClick={resendVerification}
-                                className="w-full mt-3 border border-blue-600 text-blue-600 py-3 rounded-lg hover:bg-blue-50 transition"
-                            >
-                                Resend Verification Email
-                            </button>
-
-                        )
-                    }
+                    {showResend && (
+                        <button
+                            type="button"
+                            onClick={resendVerification}
+                            className="w-full mt-3 border border-blue-600 text-blue-600 py-3 rounded-lg text-sm sm:text-base hover:bg-blue-50 transition"
+                        >
+                            Resend Verification Email
+                        </button>
+                    )}
 
                 </form>
 
-                <p className="text-center text-gray-600 mt-6">
+                <p className="text-center text-sm sm:text-base text-gray-600 mt-6">
                     Don't have an account?{" "}
                     <Link
                         to="/register"

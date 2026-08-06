@@ -73,11 +73,11 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 sm:px-6 py-8">
 
-            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-8">
+            <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 sm:p-8">
 
-                <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-center text-blue-700 mb-8">
                     Create Account 🚀
                 </h1>
 
@@ -93,7 +93,7 @@ const Register = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
                     <input
@@ -103,7 +103,7 @@ const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                     />
 
                     <div className="relative">
@@ -119,15 +119,13 @@ const Register = () => {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            className="w-full border rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full border rounded-lg px-4 py-3 pr-12 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                         />
 
                         <button
                             type="button"
                             onClick={() =>
-                                setShowPassword(
-                                    !showPassword
-                                )
+                                setShowPassword(!showPassword)
                             }
                             className="absolute right-4 top-3 text-gray-500"
                         >
@@ -151,7 +149,7 @@ const Register = () => {
                             }
                             onChange={handleChange}
                             required
-                            className="w-full border rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full border rounded-lg px-4 py-3 pr-12 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                         />
 
                         <button
@@ -173,7 +171,7 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm sm:text-base transition disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {loading
                             ? "Creating Account..."
@@ -182,7 +180,7 @@ const Register = () => {
 
                 </form>
 
-                <p className="text-center text-gray-600 mt-6">
+                <p className="text-center text-sm sm:text-base text-gray-600 mt-6">
                     Already have an account?{" "}
                     <Link
                         to="/login"

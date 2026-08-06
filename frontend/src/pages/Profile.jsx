@@ -8,7 +8,6 @@ const Profile = () => {
     const [resumeFile, setResumeFile] = useState(null);
 
     const [formData, setFormData] = useState({
-
         email: "",
         name: "",
         phone: "",
@@ -18,6 +17,7 @@ const Profile = () => {
         bio: "",
         resumeUrl: "",
     });
+
     const fields = [
         formData.name,
         formData.phone,
@@ -64,7 +64,9 @@ const Profile = () => {
                     resumeUrl: "",
                 });
             }
+
         } catch (error) {
+
             console.log(error);
 
             setFormData({
@@ -77,6 +79,7 @@ const Profile = () => {
                 bio: "",
                 resumeUrl: "",
             });
+
         }
     };
 
@@ -91,11 +94,13 @@ const Profile = () => {
         e.preventDefault();
 
         try {
+
             let updatedFormData = {
                 ...formData,
             };
 
             if (resumeFile) {
+
                 const data = new FormData();
 
                 data.append("resume", resumeFile);
@@ -107,6 +112,7 @@ const Profile = () => {
 
                 updatedFormData.resumeUrl =
                     uploadRes.data.resumeUrl;
+
             }
 
             await API.post(
@@ -114,39 +120,55 @@ const Profile = () => {
                 updatedFormData
             );
 
-            toast.success("Profile saved successfully!");
+            toast.success(
+                "Profile saved successfully!"
+            );
+
         } catch (error) {
+
             console.log(error);
-            toast.error("Failed to save profile");
+
+            toast.error(
+                "Failed to save profile"
+            );
+
         }
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
 
-            <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
+        <div className="min-h-screen bg-gray-100 py-8 md:py-10">
 
-                <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
+            <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-5 sm:p-6 md:p-8 mx-4 sm:mx-6">
+
+                <h1 className="text-2xl sm:text-3xl font-bold text-blue-700 text-center mb-8">
                     Student Profile
                 </h1>
+
+                {/* Progress */}
+
                 <div className="mb-8">
 
                     <div className="flex justify-between mb-2">
-                        <span className="font-semibold">
+
+                        <span className="font-semibold text-sm md:text-base">
                             Profile Completion
                         </span>
 
                         <span className="text-blue-700 font-bold">
                             {percentage}%
                         </span>
+
                     </div>
 
                     <div className="w-full bg-gray-200 rounded-full h-4">
 
                         <div
                             className="bg-blue-600 h-4 rounded-full"
-                            style={{ width: `${percentage}%` }}
-                        ></div>
+                            style={{
+                                width: `${percentage}%`,
+                            }}
+                        />
 
                     </div>
 
@@ -163,7 +185,7 @@ const Profile = () => {
                         placeholder="Full Name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <input
@@ -171,7 +193,7 @@ const Profile = () => {
                         name="email"
                         value={formData.email}
                         readOnly
-                        className="w-full border rounded-lg px-4 py-3 bg-gray-100"
+                        className="w-full border rounded-lg px-4 py-3 bg-gray-100 text-sm md:text-base"
                     />
 
                     <input
@@ -180,7 +202,7 @@ const Profile = () => {
                         placeholder="Phone Number"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <input
@@ -189,7 +211,7 @@ const Profile = () => {
                         placeholder="Skills (React, Node.js...)"
                         value={formData.skills}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <input
@@ -198,7 +220,7 @@ const Profile = () => {
                         placeholder="GitHub Profile"
                         value={formData.github}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <input
@@ -207,7 +229,7 @@ const Profile = () => {
                         placeholder="LinkedIn Profile"
                         value={formData.linkedin}
                         onChange={handleChange}
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <textarea
@@ -216,12 +238,12 @@ const Profile = () => {
                         value={formData.bio}
                         onChange={handleChange}
                         rows="5"
-                        className="w-full border rounded-lg px-4 py-3"
+                        className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
                     />
 
                     <div>
 
-                        <label className="font-semibold">
+                        <label className="font-semibold text-sm md:text-base">
                             Upload Resume (PDF)
                         </label>
 
@@ -229,12 +251,12 @@ const Profile = () => {
                             type="file"
                             accept=".pdf"
                             onChange={handleResumeChange}
-                            className="mt-2 w-full border rounded-lg p-3"
+                            className="mt-2 w-full border rounded-lg p-3 text-sm"
                         />
 
                         {resumeFile && (
 
-                            <p className="text-green-600 mt-2">
+                            <p className="text-green-600 mt-2 break-words text-sm">
                                 Selected:
                                 <strong> {resumeFile.name}</strong>
                             </p>
@@ -247,9 +269,9 @@ const Profile = () => {
 
                         <a
                             href={formData.resumeUrl}
-                            className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition"
                             target="_blank"
                             rel="noreferrer"
+                            className="block w-full text-center bg-green-100 text-green-700 px-4 py-3 rounded-lg hover:bg-green-200 transition"
                         >
                             📄 View Uploaded Resume
                         </a>
@@ -268,6 +290,7 @@ const Profile = () => {
             </div>
 
         </div>
+
     );
 };
 

@@ -112,15 +112,15 @@ const AdminCompanies = () => {
     return (
         <div className="min-h-screen bg-gray-100 py-10">
 
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <h1 className="text-4xl font-bold text-blue-700 mb-8">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700 mb-8">
                     Internship Management
                 </h1>
 
-                <div className="bg-white rounded-xl shadow-lg p-8 mb-10">
+                <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 md:p-8 mb-10">
 
-                    <h2 className="text-2xl font-semibold mb-6">
+                    <h2 className="text-xl sm:text-2xl font-semibold mb-6">
                         {editingId
                             ? "Update Internship"
                             : "Create Internship"}
@@ -136,7 +136,7 @@ const AdminCompanies = () => {
                             placeholder="Company Name"
                             value={formData.companyName}
                             onChange={handleChange}
-                            className="border rounded-lg px-4 py-3"
+                            className="w-full border rounded-lg px-4 py-3"
                         />
 
                         <input
@@ -144,7 +144,7 @@ const AdminCompanies = () => {
                             placeholder="Role"
                             value={formData.title}
                             onChange={handleChange}
-                            className="border rounded-lg px-4 py-3"
+                            className="w-full border rounded-lg px-4 py-3"
                         />
 
                         <input
@@ -152,7 +152,7 @@ const AdminCompanies = () => {
                             placeholder="Location"
                             value={formData.location}
                             onChange={handleChange}
-                            className="border rounded-lg px-4 py-3"
+                            className="w-full border rounded-lg px-4 py-3"
                         />
 
                         <input
@@ -160,7 +160,7 @@ const AdminCompanies = () => {
                             placeholder="Stipend"
                             value={formData.stipend}
                             onChange={handleChange}
-                            className="border rounded-lg px-4 py-3"
+                            className="w-full border rounded-lg px-4 py-3"
                         />
 
                         <input
@@ -168,10 +168,10 @@ const AdminCompanies = () => {
                             placeholder="Duration"
                             value={formData.duration}
                             onChange={handleChange}
-                            className="border rounded-lg px-4 py-3"
+                            className="w-full border rounded-lg px-4 py-3"
                         />
 
-                        <div></div>
+                        <div className="hidden md:block"></div>
 
                         <textarea
                             name="description"
@@ -179,7 +179,7 @@ const AdminCompanies = () => {
                             value={formData.description}
                             onChange={handleChange}
                             rows="5"
-                            className="border rounded-lg px-4 py-3 md:col-span-2"
+                            className="w-full border rounded-lg px-4 py-3 md:col-span-2"
                         />
 
                         <button
@@ -208,7 +208,7 @@ const AdminCompanies = () => {
                         onChange={(e) =>
                             setSearchTerm(e.target.value)
                         }
-                        className="border rounded-lg px-4 py-3 w-full md:w-96"
+                        className="w-full md:w-96 border rounded-lg px-4 py-3"
                     />
 
                 </div>
@@ -233,9 +233,9 @@ const AdminCompanies = () => {
                         .map((company) => (
                             <div
                                 key={company._id}
-                                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition"
+                                className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition"
                             >
-                                <h3 className="text-xl font-bold text-blue-700 mb-3">
+                                <h3 className="text-lg sm:text-xl font-bold text-blue-700 mb-3">
                                     {company.companyName}
                                 </h3>
 
@@ -259,7 +259,7 @@ const AdminCompanies = () => {
                                     {company.description}
                                 </p>
 
-                                <div className="flex gap-3">
+                                <div className="flex flex-col sm:flex-row gap-3">
                                     <button
                                         onClick={() => handleEdit(company)}
                                         className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg"
