@@ -19,9 +19,12 @@ const ResetPassword = () => {
             return toast.error("Passwords do not match.");
         }
 
-        if (password.length < 6) {
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordRegex.test(formData.password)) {
             return toast.error(
-                "Password must be at least 6 characters."
+                "Password must be at least 8 characters and include uppercase, lowercase, number, and special character."
             );
         }
 

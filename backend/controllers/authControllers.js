@@ -19,9 +19,13 @@ exports.registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        if (password.length < 6) {
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordRegex.test(password)) {
             return res.status(400).json({
-                message: "Password must be at least 6 characters.",
+                message:
+                    "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.",
             });
         }
 
@@ -60,14 +64,12 @@ exports.registerUser = async (req, res) => {
 
         await sendEmail(
             user.email,
-            // "Verify Your HireNest Account"
-            "HireNest TEST 123",
+            "HireNest Verify Your Account",
             `
     <div style="font-family:Arial,sans-serif;padding:20px">
 
         <h2 style="color:#2563EB;">
-            // Welcome to HireNest 🎉
-            Welcome to HireNest TEST 123 🎉
+            Welcome to HireNest 🎉
         </h2>
 
         <p>Hello <strong>${user.name}</strong>,</p>
@@ -271,6 +273,16 @@ exports.resetPassword = async (req, res) => {
     try {
         const { token } = req.params;
         const { password } = req.body;
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                message:
+                    "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.",
+            });
+        }
 
         const user = await User.findOne({
             resetPasswordToken: token,
