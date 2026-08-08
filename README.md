@@ -2,43 +2,55 @@
 
 > A full-stack MERN web application for discovering internships, applying online, managing student profiles and resumes, and handling recruitment workflows through a dedicated admin dashboard.
 
+---
+
 ## 🌐 Live Project
 
 ### 🚀 Live Website
-https://hire-nest-grhm.vercel.app
+
+[https://hire-nest-grhm.vercel.app](https://hire-nest-grhm.vercel.app)
 
 ### 💻 GitHub Repository
-https://github.com/arpitomre18/HireNest
+
+[https://github.com/arpitomre18/HireNest](https://github.com/arpitomre18/HireNest)
 
 ### ⚙️ Backend API
-https://hirenest-sua2.onrender.com
+
+[https://hirenest-sua2.onrender.com](https://hirenest-sua2.onrender.com)
+
+**API Base Path:**
+
+`https://hirenest-sua2.onrender.com/api`
 
 ---
 
 ## 📖 Overview
 
-HireNest is a full-stack Internship Management Portal built using the MERN stack.
+HireNest is a full-stack Internship Management Portal built using the **MERN stack**.
 
-The platform provides separate workflows for **students** and **administrators**.
+The platform provides separate workflows for **students** and **administrators**, covering internship discovery, applications, resume management, application tracking, company/internship management, and recruitment administration.
 
-Students can:
+### 👨‍🎓 Students can:
 
 - Create an account
-- Verify their email
+- Verify their email address
 - Log in securely
+- Manage their profile
+- Upload and manage resumes
 - Browse internship opportunities
-- Search companies and roles
+- Search internships, companies, and roles
 - View internship details
 - Apply for internships
-- Upload resumes
-- Manage their profile
+- Prevent duplicate applications
 - Track application status
 - Withdraw pending applications
 - Reset forgotten passwords
+- Receive application-related notifications
 
-Administrators can:
+### 👨‍💼 Administrators can:
 
-- Access an admin dashboard
+- Access the admin dashboard
+- Manage internship/company listings
 - Create internship listings
 - Update internship information
 - Delete internship listings
@@ -61,9 +73,10 @@ Administrators can:
 - 👤 Student profile management
 - 📄 Resume upload
 - 🏢 Browse internship opportunities
-- 🔍 Search internships, companies and roles
+- 🔍 Search internships, companies, and roles
 - 📋 View internship details
 - 🚀 Apply for internships
+- 🚫 Duplicate application prevention
 - 📊 Student dashboard
 - 📌 Track application status
 - ↩️ Withdraw pending applications
@@ -84,7 +97,7 @@ Administrators can:
 - 📄 View uploaded resumes
 - ✅ Update application status
 
-Application statuses include:
+### 📌 Application Statuses
 
 - 🟡 Pending
 - 🟣 Shortlisted
@@ -107,7 +120,7 @@ HireNest implements authentication and account-management functionality includin
 - Strong password validation
 - Role-based access control for administrative functionality
 
-### Password Requirements
+### 🔑 Password Requirements
 
 Passwords must contain:
 
@@ -141,6 +154,7 @@ Passwords must contain:
 
 - MongoDB
 - Mongoose
+- MongoDB Atlas
 
 ### Authentication
 
@@ -153,7 +167,7 @@ Passwords must contain:
 
 ### Email
 
-- SMTP email service
+- SMTP
 
 ### Deployment
 
@@ -166,27 +180,29 @@ Passwords must contain:
 ## 🏗️ Application Architecture
 
 ```text
-                    ┌──────────────────────┐
-                    │      Student         │
-                    │      / Admin         │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │      React + Vite    │
-                    │      Frontend        │
-                    └──────────┬───────────┘
-                               │
-                         Axios / HTTP
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │    Express.js API    │
-                    │       Backend        │
-                    └──────────┬───────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-              ▼                ▼                ▼
-          MongoDB           JWT/Auth        File Upload
-          Atlas             Middleware        / Email
+                         ┌──────────────────────┐
+                         │       Users          │
+                         │   Student / Admin    │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │    React + Vite      │
+                         │      Frontend        │
+                         └──────────┬───────────┘
+                                    │
+                              Axios / HTTP
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │     Express.js       │
+                         │        API           │
+                         └──────────┬───────────┘
+                                    │
+                 ┌──────────────────┼──────────────────┐
+                 │                  │                  │
+                 ▼                  ▼                  ▼
+          ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+          │  MongoDB    │    │ JWT / Auth  │    │ File Upload │
+          │    Atlas    │    │ Middleware  │    │  / Email    │
+          └─────────────┘    └─────────────┘    └─────────────┘
