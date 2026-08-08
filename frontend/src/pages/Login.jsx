@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
@@ -91,13 +92,23 @@ const Login = () => {
                     />
 
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
                         className="w-full border rounded-lg px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                     />
+
+                    <div className="flex justify-end">
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="text-xs sm:text-sm text-blue-600 hover:underline"
+                        >
+                            {showPassword ? "Hide" : "Show"} Password
+                        </button>
+                    </div>
 
                     <div className="flex justify-end">
                         <Link

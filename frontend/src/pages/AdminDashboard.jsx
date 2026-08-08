@@ -214,15 +214,29 @@ const AdminDashboard = () => {
                             Applications by Company
                         </h2>
 
-                        <Bar
-                            data={barData}
-                            options={{
-                                responsive: true,
-                                maintainAspectRatio: false,
-                            }}
-                        />
-
-                        <div className="h-72"></div>
+                        <div className="h-72 w-full">
+                            <Bar
+                                data={barData}
+                                options={{
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            ticks: {
+                                                autoSkip: true,
+                                                maxRotation: 45,
+                                                minRotation: 0,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
+                        </div>
 
                     </div>
 
