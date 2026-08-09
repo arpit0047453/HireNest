@@ -8,15 +8,15 @@
 
 ### 🚀 Live Website
 
-[https://hire-nest-grhm.vercel.app](https://hire-nest-grhm.vercel.app)
+https://hire-nest-grhm.vercel.app
 
 ### 💻 GitHub Repository
 
-[https://github.com/arpitomre18/HireNest](https://github.com/arpitomre18/HireNest)
+https://github.com/arpitomre18/HireNest
 
 ### ⚙️ Backend API
 
-[https://hirenest-sua2.onrender.com](https://hirenest-sua2.onrender.com)
+https://hirenest-sua2.onrender.com
 
 **API Base Path:**
 
@@ -28,7 +28,7 @@
 
 HireNest is a full-stack Internship Management Portal built using the **MERN stack**.
 
-The platform provides separate workflows for **students** and **administrators**, covering internship discovery, applications, resume management, application tracking, company/internship management, and recruitment administration.
+The platform provides separate workflows for **students** and **administrators**, covering internship discovery, applications, resume management, application tracking, internship management, and recruitment administration.
 
 ### 👨‍🎓 Students can:
 
