@@ -5,7 +5,10 @@ const sendEmail = require("../utils/emailService");
 // Apply Internship
 const createApplication = async (req, res) => {
     try {
-        const { studentEmail, companyId, studentName } = req.body;
+        const { companyId } = req.body;
+
+        const studentName = req.user.name;
+        const studentEmail = req.user.email;
 
         const existingApplication = await Application.findOne({
             studentEmail,
@@ -18,10 +21,19 @@ const createApplication = async (req, res) => {
             });
         }
 
-        const application = await Application.create(req.body);
-
-        // Get company details
         const company = await Company.findById(companyId);
+
+        if (!company) {
+            return res.status(404).json({
+                message: "Company not found",
+            });
+        }
+
+        const application = await Application.create({
+            studentName,
+            studentEmail,
+            companyId,
+        });
 
         // Send confirmation email
         await sendEmail(
@@ -80,7 +92,13 @@ const createApplication = async (req, res) => {
 // Get All Applications
 const getApplications = async (req, res) => {
     try {
-        const applications = await Application.find().populate("companyId");
+        const query =
+            req.user.role === "admin"
+                ? {}
+                : { studentEmail: req.user.email };
+
+        const applications = await Application.find(query)
+            .populate("companyId");
 
         res.json(applications);
     } catch (error) {
@@ -93,11 +111,32 @@ const getApplications = async (req, res) => {
 // Update Application Status
 const updateApplicationStatus = async (req, res) => {
     try {
+        const { status } = req.body;
+
+        const allowedStatuses = [
+            "Pending",
+            "Shortlisted",
+            "Selected",
+            "Rejected",
+        ];
+
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({
+                message: "Invalid application status",
+            });
+        }
+
         const application = await Application.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { status },
             { new: true }
         );
+
+        if (!application) {
+            return res.status(404).json({
+                message: "Application not found",
+            });
+        }
 
         res.json(application);
     } catch (error) {
@@ -106,17 +145,27 @@ const updateApplicationStatus = async (req, res) => {
         });
     }
 };
-
 // Withdraw Application
 const deleteApplication = async (req, res) => {
     try {
-        const application = await Application.findByIdAndDelete(req.params.id);
+        const application = await Application.findById(req.params.id);
 
         if (!application) {
             return res.status(404).json({
                 message: "Application not found",
             });
         }
+
+        if (
+            req.user.role !== "admin" &&
+            application.studentEmail !== req.user.email
+        ) {
+            return res.status(403).json({
+                message: "You are not allowed to withdraw this application",
+            });
+        }
+
+        await Application.findByIdAndDelete(req.params.id);
 
         res.json({
             message: "Application withdrawn successfully",
@@ -128,7 +177,6 @@ const deleteApplication = async (req, res) => {
         });
     }
 };
-
 module.exports = {
     createApplication,
     getApplications,

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
@@ -8,9 +9,15 @@ const {
     deleteApplication,
 } = require("../controllers/applicationController");
 
-router.post("/", createApplication);
-router.get("/", getApplications);
-router.put("/:id", updateApplicationStatus);
-router.delete("/:id", deleteApplication);
+const { protect } = require("../middleware/auth");
+const admin = require("../middleware/admin");
+
+router.post("/", protect, createApplication);
+
+router.get("/", protect, getApplications);
+
+router.put("/:id", protect, admin, updateApplicationStatus);
+
+router.delete("/:id", protect, deleteApplication);
 
 module.exports = router;

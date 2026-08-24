@@ -7,8 +7,10 @@ const {
     getProfile,
 } = require("../controllers/profileController");
 
-router.post("/", saveProfile);
+const { protect } = require("../middleware/auth");
 
-router.get("/:email", getProfile);
+router.post("/", protect, saveProfile);
+
+router.get("/:email", protect, getProfile);
 
 module.exports = router;

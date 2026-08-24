@@ -3,9 +3,11 @@ const router = express.Router();
 
 const upload = require("../middleware/upload");
 const cloudinary = require("../config/cloudinary");
+const { protect } = require("../middleware/auth");
 
 router.post(
     "/resume",
+    protect,
     upload.single("resume"),
     async (req, res) => {
         try {

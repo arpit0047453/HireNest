@@ -3,7 +3,6 @@ const Profile = require("../models/Profile");
 const saveProfile = async (req, res) => {
     try {
         const {
-            email,
             name,
             phone,
             skills,
@@ -12,6 +11,8 @@ const saveProfile = async (req, res) => {
             bio,
             resumeUrl,
         } = req.body;
+
+        const email = req.user.email;
 
         const profile = await Profile.findOneAndUpdate(
             { email },

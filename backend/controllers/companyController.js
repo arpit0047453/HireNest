@@ -3,7 +3,25 @@ const Company = require("../models/Company");
 // Create Internship
 const createCompany = async (req, res) => {
     try {
-        const company = await Company.create(req.body);
+        const {
+            companyName,
+            title,
+            location,
+            stipend,
+            duration,
+            description,
+            skills,
+        } = req.body;
+
+        const company = await Company.create({
+            companyName,
+            title,
+            location,
+            stipend,
+            duration,
+            description,
+            skills,
+        });
 
         res.status(201).json(company);
     } catch (error) {
@@ -31,8 +49,14 @@ const updateCompany = async (req, res) => {
         const company = await Company.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true }
+            { new: true, runValidators: true }
         );
+
+        if (!company) {
+            return res.status(404).json({
+                message: "Company not found",
+            });
+        }
 
         res.json(company);
     } catch (error) {
@@ -44,9 +68,13 @@ const updateCompany = async (req, res) => {
 
 const deleteCompany = async (req, res) => {
     try {
-        await Company.findByIdAndDelete(
-            req.params.id
-        );
+        const company = await Company.findByIdAndDelete(req.params.id);
+
+        if (!company) {
+            return res.status(404).json({
+                message: "Company not found",
+            });
+        }
 
         res.json({
             message: "Company deleted",
